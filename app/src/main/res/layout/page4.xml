@@ -6,26 +6,68 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="165dp"
-        android:layout_gravity="center_horizontal|center_vertical"
-        android:text="选项页面"
-        android:textSize="30sp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="182dp"
-        android:layout_gravity="center_horizontal|center_vertical"
-        android:text="没想好放什么选项"
-        android:textSize="30sp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_weight="8"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#F0F3F6"
+        >
+
+
+        <LinearLayout style="@style/wrap_layout" >
+            <!-- 上圆角-->
+            <LinearLayout style="@style/top_layout">
+                <TextView style="@style/usertext" android:text="职业技能图鉴" />
+                <ImageView style="@style/img_arrow"/>
+            </LinearLayout>
+
+            <!-- 分割线 -->
+            <View style="@style/bg_line"/>
+            <!-- 无圆角-->
+            <LinearLayout style="@style/mid_layout">
+                <TextView style="@style/usertext" android:text="怪物资料图鉴" />
+                <ImageView style="@style/img_arrow"/>
+            </LinearLayout>
+            <View style="@style/bg_line"/>
+            <!-- 下圆角-->
+            <LinearLayout style="@style/bottom_layout">
+                <TextView style="@style/usertext" android:text="武器图鉴" />
+                <ImageView style="@style/img_arrow"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <!-- 全圆角-->
+        <LinearLayout style="@style/wrap_layout">
+            <LinearLayout style="@style/single_layout">
+                <TextView style="@style/usertext" android:text="规则书查阅"/>
+                <ImageView style="@style/img_arrow"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="1"-->
+        <!--android:layout_gravity="center_horizontal|center_vertical"-->
+        <!--android:text="没想好放什么选项"-->
+        <!--android:textSize="30sp" />-->
+
     <Button
         android:id="@+id/bt"
+        android:layout_weight="1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="按钮放在这里不知道干啥"
-        android:textAllCaps="false"/>
+        android:textAllCaps="false" />
 
 
 </LinearLayout>

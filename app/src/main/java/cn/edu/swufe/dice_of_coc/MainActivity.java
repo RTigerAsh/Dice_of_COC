@@ -82,18 +82,14 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                //该方法只在滑动停止时调用，position滑动停止所在页面位置
+                //只在滑动停止时调用，position是滑动停止所在页面位置
 //                当滑动到某一位置，导航栏对应位置被按下
                 navigation.getMenu().getItem(position).setChecked(true);
-                //这里使用navigation.setSelectedItemId(position);无效，
-                //setSelectedItemId(position)的官网原句：Set the selected
-                // menu item ID. This behaves the same as tapping on an item
-                //未找到原因
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
-//这个方法在滑动是调用三次，分别对应下面三种状态
+//这个方法在滑动时调用三次，分别对应下面三种状态
 // 这个方法对于发现用户何时开始拖动，
 // 何时寻呼机自动调整到当前页面，或何时完全停止/空闲非常有用。
 //                state表示新的滑动状态，有三个值：
