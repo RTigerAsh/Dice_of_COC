@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Dice_of_COC</string>
+    <string name="title_dice">Dice</string>
+    <string name="title_card">Build</string>
+    <string name="title_user">My Card</string>
+    <string name="title_setting">Setting</string>
+</resources>
