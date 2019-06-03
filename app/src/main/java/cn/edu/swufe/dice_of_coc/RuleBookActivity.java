@@ -1,14 +1,22 @@
 package cn.edu.swufe.dice_of_coc;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.media.SoundPool;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.Loader;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.github.barteksc.pdfviewer.PDFView;
+import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener;
+import com.github.barteksc.pdfviewer.listener.OnPageChangeListener;
 
 public class RuleBookActivity extends AppCompatActivity {
 
@@ -20,7 +28,7 @@ public class RuleBookActivity extends AppCompatActivity {
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_main);
+            setContentView(R.layout.activity_rule_book);
             //获取动态权限
             getPermission();
 
@@ -28,9 +36,15 @@ public class RuleBookActivity extends AppCompatActivity {
             pageTv = (TextView) findViewById(R.id.pageTv);
             pageTv1 = (TextView) findViewById(R.id.pageTv1);
 
-            final int myPage = (int) SPUtils.get(RuleBookActivity.this, "page", 0);
+            //获取SP里的页数数据
+            SharedPreferences sharedPreferences=getSharedPreferences("page", Activity.MODE_PRIVATE);
+            final int myPage = (int)sharedPreferences.getInt("pageINT",0);
+
+            Log.i("RuleBookActivity  sp", "数据以保存到sharedPreferences");
+
+            //final int myPage = (int) SPUtils.get("page", 0);
             //选择pdf
-            pdfView.fromAsset("android.pdf")
+            pdfView.fromAsset("rule.pdf")
 //                .pages(0, 2, 3, 4, 5); // 把0 , 2 , 3 , 4 , 5 过滤掉
                     //是否允许翻页，默认是允许翻页
                     .enableSwipe(true)
@@ -107,6 +121,11 @@ public class RuleBookActivity extends AppCompatActivity {
         protected void onDestroy() {
             super.onDestroy();
             //当activity销毁的时候，保存当前的页数，下次打开的时候，直接翻到这个页
-            SPUtils.put(RuleBookActivity.this, "page", p);
+            SharedPreferences sharedPreferences=getSharedPreferences("page", Activity.MODE_PRIVATE);
+            SharedPreferences.Editor editor=sharedPreferences.edit();
+            editor.putInt("pageINT",p);
+            editor.commit();
+            //SPUtils.put(RuleBookActivity.this, "page", p);
         }
     }
+

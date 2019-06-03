@@ -42,7 +42,10 @@
 
         <!-- 全圆角-->
         <LinearLayout style="@style/wrap_layout">
-            <LinearLayout style="@style/single_layout">
+            <LinearLayout
+                style="@style/single_layout"
+                android:id="@+id/setting_rulebook"
+                >
                 <TextView style="@style/usertext" android:text="规则书查阅"/>
                 <ImageView style="@style/img_arrow"/>
             </LinearLayout>

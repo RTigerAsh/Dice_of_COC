@@ -19,7 +19,7 @@ public class Fragment3 extends Fragment {
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "Fragment1上的按钮被点击了", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Fragment3上的按钮被点击了", Toast.LENGTH_SHORT).show();
             }
         });
         return view;
