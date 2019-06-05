@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout tools:context="com.edu.swufe.dice_of_coc.WeaponListActivity"
+    android:orientation="vertical"
+    android:showDividers="middle|beginning|end"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:id="@+id/activity_weapon_list"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--android:divider="@drawable/item_divider"-->
+
+    <cn.edu.swufe.dice_of_coc.FoldLayout
+        android:id="@+id/foldlayout"
+        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:drawableRight="@drawable/menu"
+        android:text="普通武器"
+        android:gravity="center_vertical"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:drawablePadding="10dp"/>
+    <View style="@style/bg_line"/>
+
+    <cn.edu.swufe.dice_of_coc.FoldLayout
+        android:id="@+id/foldlayout1"
+        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:drawableRight="@drawable/menu"
+        android:text="手枪"
+        android:gravity="center_vertical"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:drawablePadding="10dp"/>
+    <View style="@style/bg_line"/>
+
+    <cn.edu.swufe.dice_of_coc.FoldLayout
+        android:id="@+id/foldlayout2"
+        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:drawableRight="@drawable/menu"
+        android:text="普通武器"
+        android:gravity="center_vertical"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:drawablePadding="10dp"/>
+    <View style="@style/bg_line"/>
+
+    <cn.edu.swufe.dice_of_coc.FoldLayout
+        android:id="@+id/foldlayout3"
+        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:drawableRight="@drawable/menu"
+        android:text="普通武器"
+        android:gravity="center_vertical"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:drawablePadding="10dp"/>
+    <View style="@style/bg_line"/>
+
+    <cn.edu.swufe.dice_of_coc.FoldLayout
+        android:id="@+id/foldlayout4"
+        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:drawableRight="@drawable/menu"
+        android:text="普通武器"
+        android:gravity="center_vertical"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:drawablePadding="10dp"/>
+    <View style="@style/bg_line"/>
+
+    <cn.edu.swufe.dice_of_coc.FoldLayout
+        android:id="@+id/foldlayout5"
+        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:drawableRight="@drawable/menu"
+        android:text="普通武器"
+        android:gravity="center_vertical"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:drawablePadding="10dp"/>
+    <View style="@style/bg_line"/>
+
+    <cn.edu.swufe.dice_of_coc.FoldLayout
+        android:id="@+id/foldlayout6"
+        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:drawableRight="@drawable/menu"
+        android:text="普通武器"
+        android:gravity="center_vertical"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:drawablePadding="10dp"/>
+    <View style="@style/bg_line"/>
+
+    <cn.edu.swufe.dice_of_coc.FoldLayout
+        android:id="@+id/foldlayout7"
+        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:drawableRight="@drawable/menu"
+        android:text="普通武器"
+        android:gravity="center_vertical"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:drawablePadding="10dp"/>
+    <View style="@style/bg_line"/>
+
+
+
+
+
+
+
+
+
+</LinearLayout>

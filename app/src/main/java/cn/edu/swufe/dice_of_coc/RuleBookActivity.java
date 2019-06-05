@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.media.SoundPool;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
@@ -49,7 +48,7 @@ public class RuleBookActivity extends AppCompatActivity {
                     //是否允许翻页，默认是允许翻页
                     .enableSwipe(true)
                     //pdf文档翻页是否是垂直翻页，默认是左右滑动翻页
-                    .swipeHorizontal(true)
+                    .swipeHorizontal(false)
                     //
                     .enableDoubletap(false)
                     //设置默认显示第0页
@@ -64,6 +63,7 @@ public class RuleBookActivity extends AppCompatActivity {
                         public void loadComplete(int nbPages) {
                             pageTv.setText(nbPages + "");
                             pageTv1.setText(myPage +  "/");
+                            Log.i("onLoad", "loadComplete: 开始加载");
                         }
                     })
                     //设置翻页监听
@@ -100,6 +100,7 @@ public class RuleBookActivity extends AppCompatActivity {
         private void getPermission() {
             int hasWriteContactsPermission = ContextCompat.checkSelfPermission(RuleBookActivity.this,
                     Manifest.permission.READ_EXTERNAL_STORAGE);
+            Log.i("getPermission", "getPermission: 运行方法");
             if (hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED) {
                 if (!ActivityCompat.shouldShowRequestPermissionRationale(RuleBookActivity.this,
                         Manifest.permission.READ_EXTERNAL_STORAGE)) {
