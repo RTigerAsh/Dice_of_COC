@@ -56,7 +56,7 @@ public class Fragment4 extends Fragment {
         });
 
         //点击linearLayout1跳转到职业技能资料列表
-        linearLayout2.setOnClickListener(new View.OnClickListener() {
+        linearLayout1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity().getApplicationContext(),WeaponListActivity.class);

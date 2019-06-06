@@ -5,12 +5,14 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import java.util.List;
+import cn.edu.swufe.dice_of_coc.R;
 
 public class FoldLayout extends LinearLayout implements View.OnClickListener{
 
@@ -37,6 +39,7 @@ public class FoldLayout extends LinearLayout implements View.OnClickListener{
         super(context, attrs, defStyleAttr);
         TypedArray ta = context.obtainStyledAttributes(attrs,R.styleable.FoldLayout,defStyleAttr,0);
         layoutId = ta.getResourceId(R.styleable.FoldLayout_layoutId,-1);
+        Log.i("FoldLayout", "FoldLayout: laroutID="+layoutId);
         init(context);
     }
 
