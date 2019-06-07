@@ -14,7 +14,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String WEAPON_NAME = "name";
     public static final String WEAPON_SKILLS = "skills";
     public static final String WEAPON_DAMAGE = "damage";
-    public static final String WEAPON_LIMIT = "limit";
+    public static final String WEAPON_LIMIT = "limit1";
     public static final String WEAPON_VARTIME = "vartime";
     public static final String WEAPON_NUM = "num";
     public static final String WEAPON_PRICE = "price";

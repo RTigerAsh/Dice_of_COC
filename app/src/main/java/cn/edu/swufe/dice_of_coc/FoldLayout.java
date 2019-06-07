@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import java.util.List;
-import cn.edu.swufe.dice_of_coc.R;
 
 public class FoldLayout extends LinearLayout implements View.OnClickListener{
 
@@ -56,10 +55,10 @@ public class FoldLayout extends LinearLayout implements View.OnClickListener{
 
         View defaultView = LayoutInflater.from(context).inflate(layoutId, this,true);
         defaultView.setOnClickListener(this);
-        content = new LinearLayout(context);
+        content = new LinearLayout(context);//此处的content是一个容器
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
-        content.setShowDividers(SHOW_DIVIDER_BEGINNING|SHOW_DIVIDER_MIDDLE);
+        //content.setShowDividers(SHOW_DIVIDER_BEGINNING|SHOW_DIVIDER_MIDDLE);
         //content.setDividerDrawable(ContextCompat.getDrawable(context,R.drawable.item_divider));
         content.setOrientation(VERTICAL);
         addView(content,layoutParams);
@@ -70,13 +69,13 @@ public class FoldLayout extends LinearLayout implements View.OnClickListener{
         if(isShow) {
             hideItem();
         } else {
-            showItem();
+            showItem();         //defaultView的点击事件响应
         }
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        super.onMeasure(widthMeasureSpec, 500);
         initAnimation();
     }
 
@@ -86,6 +85,7 @@ public class FoldLayout extends LinearLayout implements View.OnClickListener{
     private void initAnimation() {
 
         contentHeight = content.getMeasuredHeight();
+        //contentHeight = content.getMeasuredHeight();
         if(!init) {
             showAnimator = ValueAnimator.ofInt(0,contentHeight);
             showAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
