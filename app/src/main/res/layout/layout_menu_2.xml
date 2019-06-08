@@ -9,7 +9,7 @@
         android:drawablePadding="10dp"
         android:paddingLeft="10dp"
         android:paddingRight="7dp"
-        android:text="爆炸物、重武器和其他"
+        android:text="冲锋枪"
         android:textSize="16dp"
         android:gravity="center_vertical"
         android:drawableRight="@drawable/menu"

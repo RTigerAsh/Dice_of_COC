@@ -16,4 +16,36 @@
         android:background="@drawable/single_layout_selector"
         android:drawableRight="@drawable/setting_arrow"
         />
+    <TextView
+        android:id="@+id/weaponSkills"
+        android:layout_width="0dp"
+        android:layout_height="0dp" />
+    <TextView
+        android:id="@+id/weaponDamage"
+        android:layout_width="0dp"
+        android:layout_height="0dp" />
+    <TextView
+        android:id="@+id/weaponLimit1"
+        android:layout_width="0dp"
+        android:layout_height="0dp" />
+    <TextView
+        android:id="@+id/weaponVartime"
+        android:layout_width="0dp"
+        android:layout_height="0dp" />
+    <TextView
+        android:id="@+id/weaponNum"
+        android:layout_width="0dp"
+        android:layout_height="0dp" />
+    <TextView
+        android:id="@+id/weaponPrice"
+        android:layout_width="0dp"
+        android:layout_height="0dp" />
+    <TextView
+        android:id="@+id/weaponFault"
+        android:layout_width="0dp"
+        android:layout_height="0dp" />
+    <TextView
+        android:id="@+id/weaponTime"
+        android:layout_width="0dp"
+        android:layout_height="0dp" />
 </LinearLayout>

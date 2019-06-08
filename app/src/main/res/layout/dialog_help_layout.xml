@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    style="@style/wrap_layout"
+    android:padding="10sp"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout_title"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/help_layout_title"
+            android:textSize="20sp"
+            android:padding="7sp"
+            android:text="Tips"
+            android:textColor="@color/black"
+            android:gravity="center"/>
+
+    </RelativeLayout>
+
+    <View style="@style/bg_line"/>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <TextView
+        android:singleLine="false"
+        android:layout_width="wrap_content"
+        android:layout_height="80sp"
+        android:id="@+id/help_layout_main0"
+        android:padding="7sp"
+        android:text="此处显示注释"
+        android:gravity="center" />
+
+    </ScrollView>
+
+
+
+</LinearLayout>

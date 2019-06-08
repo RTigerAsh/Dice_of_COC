@@ -45,6 +45,19 @@ public class Fragment4 extends Fragment {
             }
         });
 
+//        //长按事件显示注释
+//        final HelpDialog helpDialog1 = new HelpDialog(getActivity().getApplicationContext());//建立自定义对话框
+//        linearLayout3.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View view) {
+//                TextView hptvm = view.findViewById(R.id.help_layout_main);
+//
+//                helpDialog1.setHptvm(""+hptvm.getText());
+//                helpDialog1.show();
+//                return true;
+//            }
+//        });
+
         //点击linearLayout2跳转到怪物资料列表
         linearLayout2.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 
 import java.util.List;
 
-public class FoldLayout extends LinearLayout implements View.OnClickListener{
+public class FoldLayout extends LinearLayout implements View.OnClickListener {
 
     private boolean init;
     private int layoutId;
@@ -73,9 +73,12 @@ public class FoldLayout extends LinearLayout implements View.OnClickListener{
         }
     }
 
+
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, 500);
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);//控制子控件的宽和高
+
         initAnimation();
     }
 
@@ -126,7 +129,7 @@ public class FoldLayout extends LinearLayout implements View.OnClickListener{
                 @Override
                 public void onClick(View v) {
                     if(null != mOnItemClickListener) {
-                        mOnItemClickListener.onItemClick(v,position);
+                        mOnItemClickListener.onItemClick(v,position);//如果点击该item，响应点击事件，参数是position
                     }
                 }
             });

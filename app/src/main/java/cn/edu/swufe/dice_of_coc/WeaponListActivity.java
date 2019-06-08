@@ -1,6 +1,8 @@
 package cn.edu.swufe.dice_of_coc;
 
+import android.app.Dialog;
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
@@ -10,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,8 +30,10 @@ import static org.litepal.LitePalApplication.getContext;
 
 
 public class WeaponListActivity extends AppCompatActivity {
-    private FoldLayout foldlayout,foldLayout1,foldlayout2,foldlayout3,foldlayout4,foldlayout5,
-            foldlayout6,foldlayout7;
+    private FoldLayout foldlayout, foldLayout1,
+                        foldlayout2, foldlayout3,
+                        foldlayout4, foldlayout5,
+                        foldlayout6,foldlayout7;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) throws NullPointerException{
@@ -47,6 +52,103 @@ public class WeaponListActivity extends AppCompatActivity {
 
         initView();
 
+
+    }
+
+    private void initOnLongCliclk(){
+        /**
+         * 设置布局的长按事件实现注释
+         */
+        final HelpDialog helpDialog = new HelpDialog(this);
+
+        foldlayout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                TextView hptvm = findViewById(R.id.help_layout_main1);
+
+                helpDialog.setHptvm(""+hptvm.getText());
+
+                helpDialog.show();
+                return true;
+            }
+        });
+        foldLayout1.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                TextView hptvm = findViewById(R.id.help_layout_main2);
+
+                helpDialog.setHptvm(""+hptvm.getText());
+
+                helpDialog.show();
+                return true;
+            }
+        });
+        foldlayout2.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                TextView hptvm = findViewById(R.id.help_layout_main3);
+
+                helpDialog.setHptvm(""+hptvm.getText());
+
+                helpDialog.show();
+                return true;
+            }
+        });
+        foldlayout3.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                TextView hptvm = findViewById(R.id.help_layout_main4);
+
+                helpDialog.setHptvm(""+hptvm.getText());
+
+                helpDialog.show();
+                return true;
+            }
+        });
+        foldlayout4.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                TextView hptvm = findViewById(R.id.help_layout_main5);
+
+                helpDialog.setHptvm(""+hptvm.getText());
+
+                helpDialog.show();
+                return true;
+            }
+        });
+        foldlayout5.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                TextView hptvm = findViewById(R.id.help_layout_main6);
+
+                helpDialog.setHptvm(""+hptvm.getText());
+
+                helpDialog.show();
+                return true;
+            }
+        });
+        foldlayout6.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                TextView hptvm = findViewById(R.id.help_layout_main7);
+
+                helpDialog.setHptvm(""+hptvm.getText());
+
+                helpDialog.show();
+                return true;
+            }
+        });
+        foldlayout7.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                TextView hptvm = findViewById(R.id.help_layout_main8);
+
+                helpDialog.setHptvm(""+hptvm.getText());
+
+                helpDialog.show();
+                return true;
+            }
+        });
 
     }
     private void initView() {
@@ -70,45 +172,307 @@ public class WeaponListActivity extends AppCompatActivity {
         List<View> views7 = new ArrayList<>();
         List<View> views8 = new ArrayList<>();
 
+        initOnLongCliclk();
+
 
         /**
-         * 初始化第一个Menu的Item
+         * 初始化Menu的Item
          */
-        views1=getItem(0,7);
+        views1=getItem(0,16);
         foldlayout.addItemView(views1);
-        /**
-         * 初始化第二个Menu的Item
-         */
-        views2=getItem(8,15);
+
+        views2=getItem(16,28);
         foldLayout1.addItemView(views2);
 
-        views3=getItem(16,23);
+        views3=getItem(28,34);
         foldlayout2.addItemView(views3);
 
-        views4=getItem(24,31);
+        views4=getItem(34,42);
         foldlayout3.addItemView(views4);
 
-        views5=getItem(32,39);
+        views5=getItem(42,70);
         foldlayout4.addItemView(views5);
 
-        views6=getItem(40,47);
+        views6=getItem(70,79);
         foldlayout5.addItemView(views6);
 
-        views7=getItem(48,55);
+        views7=getItem(79,91);
         foldlayout6.addItemView(views7);
 
-        views8=getItem(56,63);
+        views8=getItem(91,100);
         foldlayout7.addItemView(views8);
+
+        final ConstomDialog mdialog = new ConstomDialog(this);//建立自定义对话框
+
+        final List<View> finalViews = views1;
+        final List<View> finalViews1 = views2;
+        final List<View> finalViews2 = views3;
+        final List<View> finalViews3 = views4;
+        final List<View> finalViews4 = views5;
+        final List<View> finalViews5 = views6;
+        final List<View> finalViews6 = views7;
+        final List<View> finalViews7 = views8;
+
+
 
         /**
          * 设置Item的单击事件
          */
         foldlayout.setOnItemClickListener(new FoldLayout.OnItemClickListener() {
+
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(WeaponListActivity.this, "点击了第"+position+"个", Toast.LENGTH_SHORT).show();
+                //获得该Item的数据，放入对话框中显示
+                TextView tv00 = finalViews.get(position).findViewById(R.id.weaponName);
+                TextView tv11 = finalViews.get(position).findViewById(R.id.weaponSkills);
+                TextView tv22 = finalViews.get(position).findViewById(R.id.weaponDamage);
+                TextView tv33 = finalViews.get(position).findViewById(R.id.weaponLimit1);
+                TextView tv44 = finalViews.get(position).findViewById(R.id.weaponVartime);
+                TextView tv55 = finalViews.get(position).findViewById(R.id.weaponNum);
+                TextView tv66 = finalViews.get(position).findViewById(R.id.weaponPrice);
+                TextView tv77 = finalViews.get(position).findViewById(R.id.weaponFault);
+                TextView tv88 = finalViews.get(position).findViewById(R.id.weaponTime);
+
+                mdialog.setTv(""+tv00.getText());
+                mdialog.setTv1(""+tv11.getText());
+                mdialog.setTv2(""+tv22.getText());
+                mdialog.setTv3(""+tv33.getText());
+                mdialog.setTv4(""+tv44.getText());
+                mdialog.setTv5(""+tv55.getText());
+                mdialog.setTv6(""+tv66.getText());
+                mdialog.setTv7(""+tv77.getText());
+                mdialog.setTv8(""+tv88.getText());
+
+                //列表显示
+                //Toast.makeText(WeaponListActivity.this, "点击了第"+position+"个", Toast.LENGTH_SHORT).show();
+                mdialog.show();
+
             }
         });
+
+        foldLayout1.setOnItemClickListener(new FoldLayout.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(View view, int position) {
+                //获得该Item的数据，放入对话框中显示
+                TextView tv00 = finalViews1.get(position).findViewById(R.id.weaponName);
+                TextView tv11 = finalViews1.get(position).findViewById(R.id.weaponSkills);
+                TextView tv22 = finalViews1.get(position).findViewById(R.id.weaponDamage);
+                TextView tv33 = finalViews1.get(position).findViewById(R.id.weaponLimit1);
+                TextView tv44 = finalViews1.get(position).findViewById(R.id.weaponVartime);
+                TextView tv55 = finalViews1.get(position).findViewById(R.id.weaponNum);
+                TextView tv66 = finalViews1.get(position).findViewById(R.id.weaponPrice);
+                TextView tv77 = finalViews1.get(position).findViewById(R.id.weaponFault);
+                TextView tv88 = finalViews1.get(position).findViewById(R.id.weaponTime);
+
+                mdialog.setTv(""+tv00.getText());
+                mdialog.setTv1(""+tv11.getText());
+                mdialog.setTv2(""+tv22.getText());
+                mdialog.setTv3(""+tv33.getText());
+                mdialog.setTv4(""+tv44.getText());
+                mdialog.setTv5(""+tv55.getText());
+                mdialog.setTv6(""+tv66.getText());
+                mdialog.setTv7(""+tv77.getText());
+                mdialog.setTv8(""+tv88.getText());
+
+                //列表显示
+                //Toast.makeText(WeaponListActivity.this, "点击了第"+position+"个", Toast.LENGTH_SHORT).show();
+                mdialog.show();
+
+            }
+        });
+        foldlayout2.setOnItemClickListener(new FoldLayout.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(View view, int position) {
+                //获得该Item的数据，放入对话框中显示
+                TextView tv00 = finalViews2.get(position).findViewById(R.id.weaponName);
+                TextView tv11 = finalViews2.get(position).findViewById(R.id.weaponSkills);
+                TextView tv22 = finalViews2.get(position).findViewById(R.id.weaponDamage);
+                TextView tv33 = finalViews2.get(position).findViewById(R.id.weaponLimit1);
+                TextView tv44 = finalViews2.get(position).findViewById(R.id.weaponVartime);
+                TextView tv55 = finalViews2.get(position).findViewById(R.id.weaponNum);
+                TextView tv66 = finalViews2.get(position).findViewById(R.id.weaponPrice);
+                TextView tv77 = finalViews2.get(position).findViewById(R.id.weaponFault);
+                TextView tv88 = finalViews2.get(position).findViewById(R.id.weaponTime);
+
+                mdialog.setTv(""+tv00.getText());
+                mdialog.setTv1(""+tv11.getText());
+                mdialog.setTv2(""+tv22.getText());
+                mdialog.setTv3(""+tv33.getText());
+                mdialog.setTv4(""+tv44.getText());
+                mdialog.setTv5(""+tv55.getText());
+                mdialog.setTv6(""+tv66.getText());
+                mdialog.setTv7(""+tv77.getText());
+                mdialog.setTv8(""+tv88.getText());
+
+                //列表显示
+               // Toast.makeText(WeaponListActivity.this, "点击了第"+position+"个", Toast.LENGTH_SHORT).show();
+                mdialog.show();
+
+            }
+        });
+
+        foldlayout3.setOnItemClickListener(new FoldLayout.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(View view, int position) {
+                //获得该Item的数据，放入对话框中显示
+                TextView tv00 = finalViews3.get(position).findViewById(R.id.weaponName);
+                TextView tv11 = finalViews3.get(position).findViewById(R.id.weaponSkills);
+                TextView tv22 = finalViews3.get(position).findViewById(R.id.weaponDamage);
+                TextView tv33 = finalViews3.get(position).findViewById(R.id.weaponLimit1);
+                TextView tv44 = finalViews3.get(position).findViewById(R.id.weaponVartime);
+                TextView tv55 = finalViews3.get(position).findViewById(R.id.weaponNum);
+                TextView tv66 = finalViews3.get(position).findViewById(R.id.weaponPrice);
+                TextView tv77 = finalViews3.get(position).findViewById(R.id.weaponFault);
+                TextView tv88 = finalViews3.get(position).findViewById(R.id.weaponTime);
+
+                mdialog.setTv(""+tv00.getText());
+                mdialog.setTv1(""+tv11.getText());
+                mdialog.setTv2(""+tv22.getText());
+                mdialog.setTv3(""+tv33.getText());
+                mdialog.setTv4(""+tv44.getText());
+                mdialog.setTv5(""+tv55.getText());
+                mdialog.setTv6(""+tv66.getText());
+                mdialog.setTv7(""+tv77.getText());
+                mdialog.setTv8(""+tv88.getText());
+
+                //列表显示
+                //Toast.makeText(WeaponListActivity.this, "点击了第"+position+"个", Toast.LENGTH_SHORT).show();
+                mdialog.show();
+
+            }
+        });
+
+        foldlayout4.setOnItemClickListener(new FoldLayout.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(View view, int position) {
+                //获得该Item的数据，放入对话框中显示
+                TextView tv00 = finalViews4.get(position).findViewById(R.id.weaponName);
+                TextView tv11 = finalViews4.get(position).findViewById(R.id.weaponSkills);
+                TextView tv22 = finalViews4.get(position).findViewById(R.id.weaponDamage);
+                TextView tv33 = finalViews4.get(position).findViewById(R.id.weaponLimit1);
+                TextView tv44 = finalViews4.get(position).findViewById(R.id.weaponVartime);
+                TextView tv55 = finalViews4.get(position).findViewById(R.id.weaponNum);
+                TextView tv66 = finalViews4.get(position).findViewById(R.id.weaponPrice);
+                TextView tv77 = finalViews4.get(position).findViewById(R.id.weaponFault);
+                TextView tv88 = finalViews4.get(position).findViewById(R.id.weaponTime);
+
+                mdialog.setTv(""+tv00.getText());
+                mdialog.setTv1(""+tv11.getText());
+                mdialog.setTv2(""+tv22.getText());
+                mdialog.setTv3(""+tv33.getText());
+                mdialog.setTv4(""+tv44.getText());
+                mdialog.setTv5(""+tv55.getText());
+                mdialog.setTv6(""+tv66.getText());
+                mdialog.setTv7(""+tv77.getText());
+                mdialog.setTv8(""+tv88.getText());
+
+                //列表显示
+                //Toast.makeText(WeaponListActivity.this, "点击了第"+position+"个", Toast.LENGTH_SHORT).show();
+                mdialog.show();
+
+            }
+        });
+
+        foldlayout5.setOnItemClickListener(new FoldLayout.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(View view, int position) {
+                //获得该Item的数据，放入对话框中显示
+                TextView tv00 = finalViews5.get(position).findViewById(R.id.weaponName);
+                TextView tv11 = finalViews5.get(position).findViewById(R.id.weaponSkills);
+                TextView tv22 = finalViews5.get(position).findViewById(R.id.weaponDamage);
+                TextView tv33 = finalViews5.get(position).findViewById(R.id.weaponLimit1);
+                TextView tv44 = finalViews5.get(position).findViewById(R.id.weaponVartime);
+                TextView tv55 = finalViews5.get(position).findViewById(R.id.weaponNum);
+                TextView tv66 = finalViews5.get(position).findViewById(R.id.weaponPrice);
+                TextView tv77 = finalViews5.get(position).findViewById(R.id.weaponFault);
+                TextView tv88 = finalViews5.get(position).findViewById(R.id.weaponTime);
+
+                mdialog.setTv(""+tv00.getText());
+                mdialog.setTv1(""+tv11.getText());
+                mdialog.setTv2(""+tv22.getText());
+                mdialog.setTv3(""+tv33.getText());
+                mdialog.setTv4(""+tv44.getText());
+                mdialog.setTv5(""+tv55.getText());
+                mdialog.setTv6(""+tv66.getText());
+                mdialog.setTv7(""+tv77.getText());
+                mdialog.setTv8(""+tv88.getText());
+
+                //列表显示
+                //Toast.makeText(WeaponListActivity.this, "点击了第"+position+"个", Toast.LENGTH_SHORT).show();
+                mdialog.show();
+
+            }
+        });
+
+        foldlayout6.setOnItemClickListener(new FoldLayout.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(View view, int position) {
+                //获得该Item的数据，放入对话框中显示
+                TextView tv00 = finalViews6.get(position).findViewById(R.id.weaponName);
+                TextView tv11 = finalViews6.get(position).findViewById(R.id.weaponSkills);
+                TextView tv22 = finalViews6.get(position).findViewById(R.id.weaponDamage);
+                TextView tv33 = finalViews6.get(position).findViewById(R.id.weaponLimit1);
+                TextView tv44 = finalViews6.get(position).findViewById(R.id.weaponVartime);
+                TextView tv55 = finalViews6.get(position).findViewById(R.id.weaponNum);
+                TextView tv66 = finalViews6.get(position).findViewById(R.id.weaponPrice);
+                TextView tv77 = finalViews6.get(position).findViewById(R.id.weaponFault);
+                TextView tv88 = finalViews6.get(position).findViewById(R.id.weaponTime);
+
+                mdialog.setTv(""+tv00.getText());
+                mdialog.setTv1(""+tv11.getText());
+                mdialog.setTv2(""+tv22.getText());
+                mdialog.setTv3(""+tv33.getText());
+                mdialog.setTv4(""+tv44.getText());
+                mdialog.setTv5(""+tv55.getText());
+                mdialog.setTv6(""+tv66.getText());
+                mdialog.setTv7(""+tv77.getText());
+                mdialog.setTv8(""+tv88.getText());
+
+                //列表显示
+                //Toast.makeText(WeaponListActivity.this, "点击了第"+position+"个", Toast.LENGTH_SHORT).show();
+                mdialog.show();
+
+            }
+        });
+
+        foldlayout7.setOnItemClickListener(new FoldLayout.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(View view, int position) {
+                //获得该Item的数据，放入对话框中显示
+                TextView tv00 = finalViews7.get(position).findViewById(R.id.weaponName);
+                TextView tv11 = finalViews7.get(position).findViewById(R.id.weaponSkills);
+                TextView tv22 = finalViews7.get(position).findViewById(R.id.weaponDamage);
+                TextView tv33 = finalViews7.get(position).findViewById(R.id.weaponLimit1);
+                TextView tv44 = finalViews7.get(position).findViewById(R.id.weaponVartime);
+                TextView tv55 = finalViews7.get(position).findViewById(R.id.weaponNum);
+                TextView tv66 = finalViews7.get(position).findViewById(R.id.weaponPrice);
+                TextView tv77 = finalViews7.get(position).findViewById(R.id.weaponFault);
+                TextView tv88 = finalViews7.get(position).findViewById(R.id.weaponTime);
+
+                mdialog.setTv(""+tv00.getText());
+                mdialog.setTv1(""+tv11.getText());
+                mdialog.setTv2(""+tv22.getText());
+                mdialog.setTv3(""+tv33.getText());
+                mdialog.setTv4(""+tv44.getText());
+                mdialog.setTv5(""+tv55.getText());
+                mdialog.setTv6(""+tv66.getText());
+                mdialog.setTv7(""+tv77.getText());
+                mdialog.setTv8(""+tv88.getText());
+
+                //列表显示
+                //Toast.makeText(WeaponListActivity.this, "点击了第"+position+"个", Toast.LENGTH_SHORT).show();
+                mdialog.show();
+
+            }
+        });
+
 
 
     }
@@ -149,8 +513,8 @@ public class WeaponListActivity extends AppCompatActivity {
     }
 
 
-        // 第一阶段，从Excel报表中读出数据。
-        private List<CellDataContainer> readDataFromExcel() throws IOException {
+    // 第一阶段，从Excel报表中读出数据。
+    private List<CellDataContainer> readDataFromExcel() throws IOException {
             //File xlsFile = new File(String.valueOf(getResources().getAssets().open("weapon.xls")), "weapon.xls");
 
             HSSFWorkbook mWorkbook = null;
@@ -194,8 +558,8 @@ public class WeaponListActivity extends AppCompatActivity {
             return cellDataContainer;
         }
 
-        // 从Excel表中单元读取出来的数据容器。
-        private class CellDataContainer {
+    //从Excel表中单元读取出来的数据容器。
+    private class CellDataContainer {
             public String id;
             public String name;
             public String skills;
@@ -208,7 +572,6 @@ public class WeaponListActivity extends AppCompatActivity {
             public String time;
 
         }
-
 
     //封装获得下拉Item的方法
     public List<View> getItem(int stPostion, int endPostion){
@@ -223,6 +586,15 @@ public class WeaponListActivity extends AppCompatActivity {
                 WeaponItem item = new WeaponItem();
                 item.setID(cursor.getInt(cursor.getColumnIndex("id")));
                 item.setWeaponName(cursor.getString(cursor.getColumnIndex("name")));
+                item.setWeaponskills(cursor.getString(cursor.getColumnIndex("skills")));
+                item.setWeapondamage(cursor.getString(cursor.getColumnIndex("damage")));
+                item.setWeaponlimit1(cursor.getString(cursor.getColumnIndex("limit1")));
+                item.setWeaponvartime(cursor.getString(cursor.getColumnIndex("vartime")));
+                item.setWeaponnum(cursor.getString(cursor.getColumnIndex("num")));
+                item.setWeaponprice(cursor.getString(cursor.getColumnIndex("price")));
+                item.setWeaponfault(cursor.getString(cursor.getColumnIndex("fault")));
+                item.setWeapontime(cursor.getString(cursor.getColumnIndex("time")));
+
                 View view = item.setView(item);
                 List1.add(view);
             }
@@ -232,9 +604,83 @@ public class WeaponListActivity extends AppCompatActivity {
         return List1;
     }
 
+    //自定义显示数据的对话框
+    public class ConstomDialog extends Dialog {
+
+        /*标题文字*/
+        private TextView tv;
+
+        /*各列TextView*/
+        private TextView tv1;
+        private TextView tv2;
+        private TextView tv3;
+        private TextView tv4;
+        private TextView tv5;
+        private TextView tv6;
+        private TextView tv7;
+        private TextView tv8;
+
+        //构造方法
+        public ConstomDialog(Context context) {
+            super(context, R.style.mdialog);
+            //通过LayoutInflater获取布局
+            View view = LayoutInflater.from(getContext()).
+                    inflate(R.layout.dialog_layout, null);
+
+            tv = (TextView) view.findViewById(R.id.title);
+            tv1 = (TextView) view.findViewById(R.id.dialog_skillText);
+            tv2 = (TextView) view.findViewById(R.id.dialog_damageText);
+            tv3 = (TextView) view.findViewById(R.id.dialog_limit1Text);
+            tv4 = (TextView) view.findViewById(R.id.dialog_vartime1Text);
+            tv5 = (TextView) view.findViewById(R.id.dialog_numText);
+            tv6 = (TextView) view.findViewById(R.id.dialog_priceText);
+            tv7 = (TextView) view.findViewById(R.id.dialog_faultText);
+            tv8 = (TextView) view.findViewById(R.id.dialog_timeText);
 
 
+            //设置显示的视图
+            setContentView(view);
+        }
 
+        /**
+         * 设置显示的标题文字
+         */
+        public void setTv(String string) {
+            tv.setText(string);
+        }
+
+        public void setTv1(String string) {
+            tv1.setText(string);
+        }
+
+        public void setTv2(String string) {
+            tv2.setText(string);
+        }
+
+        public void setTv3(String string) {
+            tv3.setText(string);
+        }
+
+        public void setTv4(String string) {
+            tv4.setText(string);
+        }
+
+        public void setTv5(String string) {
+            tv5.setText(string);
+        }
+
+        public void setTv6(String string) {
+            tv6.setText(string);
+        }
+
+        public void setTv7(String string) {
+            tv7.setText(string);
+        }
+
+        public void setTv8(String string) {
+            tv8.setText(string);
+        }
+    }
 }
 
 

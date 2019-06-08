@@ -4,4 +4,37 @@
     <string name="title_card">Build</string>
     <string name="title_user">My Card</string>
     <string name="title_setting">Setting</string>
+
+    <string name="helpdialog_main1">该类武器可以贯穿。
+
+    </string>
+    <string name="helpdialog_main2">该武器可以贯穿。"\n"使用技能：射击（步霰)。"\n"
+           	大部分种类每回合发射 1 发。上膛时间和换弹时间相比，可以忽略不计。"\n"突击步枪可以在单发、三发点射和自动连射之间切换。
+
+    </string>
+    <string name="helpdialog_main3">该类武器可以贯穿。"\n"使用技能：射击（冲锋枪)
+
+    </string>
+    <string name="helpdialog_main4">该类武器可以贯穿。"\n"使用技能：射击（机枪)。
+
+    </string>
+    <string name="helpdialog_main5"> 无</string>
+    <string name="helpdialog_main6">该武器是非贯穿武器。 "\n"使用技能：射击（步霰）"\n"
+  	        分三个范围：近程、中程、远程，伤害不同。步枪和手枪可以贯穿，但是霰弹枪不能贯穿（尽管装有实心铅弹的霰弹枪可以)。
+            这不表明霰弹枪不致命；近距离的霰弹枪射击极难成功可以造成 24 点伤害！
+           "\n" 实心铅弹的伤害：10 号，1D10+7；12 号，1D10+6；16 号，1D10+5，20 号，1D10+4；射程 50 码，可以贯穿。
+
+    </string>
+    <string name="helpdialog_main7">该类武器可以贯穿。"\n"使用技能射击(手枪)。"\n"
+	        如果每回合发射多于 1 发，每次掷骰都有一个惩罚骰。括号内标注了每回合最多射击次数。
+
+    </string>
+    <string name="helpdialog_main8">该类武器可以贯穿。"\n"
+	        单发射击模式下使用「射击（步霰)」技能，点射或连射模式下使用「射击（冲锋枪)」技能。
+
+    </string>
+
+
+
+
 </resources>
