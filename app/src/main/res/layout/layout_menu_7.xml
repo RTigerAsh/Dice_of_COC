@@ -11,6 +11,7 @@
         android:paddingRight="7dp"
         android:text="突击步枪"
         android:textSize="16dp"
+        android:textColor="@color/text_clo"
         android:gravity="center_vertical"
         android:drawableRight="@drawable/menu"
         />
