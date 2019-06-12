@@ -57,7 +57,7 @@ public class WeaponListActivity extends AppCompatActivity {
 
     private void initOnLongCliclk(){
         /**
-         * 设置布局的长按事件实现注释
+         * 设置布局的长按事件实现注释显示
          */
         final HelpDialog helpDialog = new HelpDialog(this);
 
@@ -623,7 +623,7 @@ public class WeaponListActivity extends AppCompatActivity {
         //构造方法
         public ConstomDialog(Context context) {
             super(context, R.style.mdialog);
-            //通过LayoutInflater获取布局
+            //获取布局
             View view = LayoutInflater.from(getContext()).
                     inflate(R.layout.dialog_layout, null);
 

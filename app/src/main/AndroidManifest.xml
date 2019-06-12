@@ -12,8 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".WeaponListActivity">
-        </activity>
+        <activity android:name=".MainSkillsActivity"></activity>
+        <activity android:name=".MonsterActivity" />
+        <activity android:name=".WeaponListActivity" />
         <activity android:name=".RuleBookActivity" />
         <activity android:name=".WelcomeGuideActivity" />
         <activity android:name=".WelcomeActivity">

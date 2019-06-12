@@ -2,6 +2,7 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -20,7 +21,7 @@
             <!-- 上圆角-->
             <LinearLayout style="@style/top_layout"
                 android:id="@+id/setting_skill">
-                <TextView style="@style/usertext" android:text="职业技能图鉴" />
+                <TextView style="@style/usertext" android:text="职业技能资料" />
                 <ImageView style="@style/img_arrow"/>
             </LinearLayout>
 
@@ -29,14 +30,14 @@
             <!-- 无圆角-->
             <LinearLayout style="@style/mid_layout"
                 android:id="@+id/setting_monster">
-                <TextView style="@style/usertext" android:text="怪物资料图鉴" />
+                <TextView style="@style/usertext" android:text="怪物资料" />
                 <ImageView style="@style/img_arrow"/>
             </LinearLayout>
             <View style="@style/bg_line"/>
             <!-- 下圆角-->
             <LinearLayout style="@style/bottom_layout"
                 android:id="@+id/setting_weapon">
-                <TextView style="@style/usertext" android:text="武器图鉴" />
+                <TextView style="@style/usertext" android:text="武器列表" />
                 <ImageView style="@style/img_arrow"/>
             </LinearLayout>
 
@@ -56,6 +57,38 @@
         </LinearLayout>
 
     </LinearLayout>
+    <TextView
+        android:id="@+id/help_layout_main"
+        android:layout_width="0dp"
+        android:text="@string/helpdialog_main"
+        android:layout_height="0dp" />
+
+    <TextView
+        android:id="@+id/help_layout_main"
+        android:layout_width="0dp"
+        android:text="@string/helpdialog_main"
+        android:layout_height="0dp"
+        tools:ignore="DuplicateIds" />
+
+    <TextView
+        android:id="@+id/help_text1"
+        android:layout_width="0dp"
+        android:text="@string/helpdialog_help_text1"
+        android:layout_height="0dp" />
+
+    <TextView
+        android:id="@+id/help_text2"
+        android:layout_width="0dp"
+        android:text="@string/helpdialog_help_text2"
+        android:layout_height="0dp" />
+
+    <TextView
+        android:id="@+id/help_text4"
+        android:layout_width="0dp"
+        android:text="@string/helpdialog_help_text4"
+        android:layout_height="0dp" />
+
+
 
 
     <!--<Button-->
