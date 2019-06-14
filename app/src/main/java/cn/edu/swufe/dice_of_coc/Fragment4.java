@@ -29,6 +29,9 @@ public class Fragment4 extends Fragment {
         final TextView hptvm3 = (TextView)view.findViewById(R.id.help_layout_main);
         final TextView hptvm4 = (TextView)view.findViewById(R.id.help_text4);
 
+        // 建立自定义对话框
+        final HelpDialog helpDialog = new HelpDialog(this.getActivity());
+
         //从fragment4中跳转到规则书--RuleBookActivity页面
         linearLayout4.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,7 +43,6 @@ public class Fragment4 extends Fragment {
         });
 
         //长按事件显示注释
-        final HelpDialog helpDialog = new HelpDialog(this.getActivity());//建立自定义对话框
         linearLayout4.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {

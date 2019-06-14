@@ -16,9 +16,6 @@
         <activity android:name=".MonsterActivity" />
         <activity android:name=".WeaponListActivity" />
         <activity android:name=".RuleBookActivity" />
-        <activity android:name=".DiceActivity">
-
-        </activity>
         <activity android:name=".WelcomeGuideActivity" />
         <activity android:name=".WelcomeActivity">
             <intent-filter>
@@ -32,7 +29,10 @@
             android:name="com.google.android.actions"
             android:resource="@xml/colortext" />
 
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity" >
+
+
+        </activity>
     </application>
 
 </manifest>

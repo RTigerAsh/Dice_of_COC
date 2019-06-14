@@ -27,7 +27,7 @@ public class HelpDialog extends Dialog {
     }
 
     /**
-     * 设置显示的帮助
+     * 设置显示的Tips
      */
 
     public void setHptvm(String string) {
