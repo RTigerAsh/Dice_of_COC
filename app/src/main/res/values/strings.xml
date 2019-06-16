@@ -71,5 +71,14 @@
     <string name="helpdialog_help_text2">所展示的怪物资料，远远称不上是克苏鲁神话生物的完整列表。恐怖作品的爱好者大概还能想到许许多多本章中没有包含的怪物吧；此处记载的，只是那些在最重要的故事中登场的怪物、以及最常被提到的怪物。如果还想要更多神话生物的资料，就请参见Chaosium出版的《生物指南》(Creature Companion)一书。"\n"</string>
     <string name="helpdialog_help_text4">所使用的规则书是《克苏鲁的呼唤》第七版规则书翻译版，如有错漏，还请见谅</string>
 
+    <string-array name="spinner">
+        <item>30 Seconds</item>
+        <item>1 Minute</item>
+        <item>5 Minutes</item>
+        <item>10 Minutes</item>
+        <item>15 Minutes</item>
+        <item>30 Minutes</item>
+        <item>60 Minutes</item>
+    </string-array>
 
 </resources>

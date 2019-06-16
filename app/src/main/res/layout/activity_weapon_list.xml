@@ -92,7 +92,7 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             app:layoutId="@layout/layout_menu_7"/>
-        <View style="@style/bg_line"/>
+
 
         <TextView
             android:id="@+id/help_layout_main1"

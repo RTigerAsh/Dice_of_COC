@@ -1,0 +1,555 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:scrollbars="none"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".BuildCardActivity">
+    <LinearLayout
+        android:orientation="vertical"
+        style="@style/wrap_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:padding="7sp"
+            android:text="决定属性"
+            android:gravity="center"
+            android:textSize="27sp"
+            android:textColor="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <View style="@style/bg_line"/>
+
+        <!--力量-->
+        <LinearLayout
+        android:padding="10sp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="力量（STR）"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textSize="20sp"/>
+        <TextView
+            android:id="@+id/build_STR"
+            android:gravity="center"
+            android:textColor="@android:color/holo_green_light"
+            android:text="23333"
+            android:textSize="20sp"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/build_STR_half"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="56"
+                android:textSize="11sp"/>
+            <View style="@style/bg_line"/>
+            <TextView
+                android:id="@+id/build_STR_fif"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="56"
+                android:textSize="11sp"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+        <View style="@style/bg_line"/>
+
+        <!--体质-->
+        <LinearLayout
+            android:padding="12sp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="体质 (CON)"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textSize="20sp"/>
+            <TextView
+                android:id="@+id/build_CON"
+                android:gravity="center"
+                android:textColor="@android:color/holo_green_light"
+                android:text="233"
+                android:textSize="20sp"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/build_CON_half"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="56"
+                    android:textSize="11sp"/>
+                <View style="@style/bg_line"/>
+                <TextView
+                    android:id="@+id/build_CON_fif"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="56"
+                    android:textSize="11sp"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+        <View style="@style/bg_line"/>
+
+        <!--体型-->
+        <LinearLayout
+            android:padding="12sp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="体型(SIZ)"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textSize="20sp"/>
+            <TextView
+                android:id="@+id/build_SIZ"
+                android:gravity="center"
+                android:textColor="@android:color/holo_green_light"
+                android:text="233"
+                android:textSize="20sp"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/build_SIZ_half"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="56"
+                    android:textSize="11sp"/>
+                <View style="@style/bg_line"/>
+                <TextView
+                    android:id="@+id/build_SIZ_fif"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="56"
+                    android:textSize="11sp"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+        <View style="@style/bg_line"/>
+
+        <!--敏捷-->
+        <LinearLayout
+            android:padding="12sp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="敏捷(DEX)"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textSize="20sp"/>
+            <TextView
+                android:id="@+id/build_DEX"
+                android:gravity="center"
+                android:textColor="@android:color/holo_green_light"
+                android:text="23"
+                android:textSize="20sp"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/build_DEX_half"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="56"
+                    android:textSize="11sp"/>
+                <View style="@style/bg_line"/>
+                <TextView
+                    android:id="@+id/build_DEX_fif"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="56"
+                    android:textSize="11sp"/>
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+        <View style="@style/bg_line"/>
+
+        <!--外貌-->
+        <LinearLayout
+            android:padding="12sp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="外貌(APP)"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textSize="20sp"/>
+            <TextView
+                android:id="@+id/build_APP"
+                android:gravity="center"
+                android:textColor="@android:color/holo_green_light"
+                android:text="2333"
+                android:textSize="20sp"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/build_APP_half"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="56"
+                    android:textSize="11sp"/>
+                <View style="@style/bg_line"/>
+                <TextView
+                    android:id="@+id/build_APP_fif"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="56"
+                    android:textSize="11sp"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+        <View style="@style/bg_line"/>
+
+        <!--智力-->
+        <LinearLayout
+            android:padding="12sp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="智力(INT)"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textSize="20sp"/>
+            <TextView
+                android:id="@+id/build_INT"
+                android:gravity="center"
+                android:textColor="@android:color/holo_green_light"
+                android:text="233"
+                android:textSize="20sp"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/build_INT_half"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="56"
+                    android:textSize="11sp"/>
+                <View style="@style/bg_line"/>
+                <TextView
+                    android:id="@+id/build_INT_fif"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="56"
+                    android:textSize="11sp"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+        <View style="@style/bg_line"/>
+
+        <!--意志-->
+        <LinearLayout
+            android:padding="12sp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="意志(POW)"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textSize="20sp"/>
+            <TextView
+                android:id="@+id/build_POW"
+                android:gravity="center"
+                android:textColor="@android:color/holo_green_light"
+                android:text="23333333"
+                android:textSize="20sp"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/build_POW_half"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="56"
+                    android:textSize="11sp"/>
+                <View style="@style/bg_line"/>
+                <TextView
+                    android:id="@+id/build_POW_fif"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="56"
+                    android:textSize="11sp"/>
+
+            </LinearLayout>
+        </LinearLayout>
+        <View style="@style/bg_line"/>
+
+        <!--教育-->
+        <LinearLayout
+                android:padding="12sp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="教育(EDU)"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/holo_blue_dark"
+                    android:textSize="20sp"/>
+                <TextView
+                    android:id="@+id/build_EDU"
+                    android:gravity="center"
+                    android:textColor="@android:color/holo_green_light"
+                    android:text="23333"
+                    android:textSize="20sp"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/build_EDU_half"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="56"
+                    android:textSize="11sp"/>
+                <View style="@style/bg_line"/>
+                <TextView
+                    android:id="@+id/build_EDU_fif"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="56"
+                    android:textSize="11sp"/>
+
+            </LinearLayout>
+        </LinearLayout>
+        <View style="@style/bg_line"/>
+
+        <!--幸运-->
+        <LinearLayout
+            android:padding="12sp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="幸运"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textSize="20sp"/>
+            <TextView
+                android:id="@+id/build_LUCKY"
+                android:textColor="@android:color/holo_green_light"
+                android:text="23333"
+                android:textSize="20sp"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:text="年龄"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textSize="20sp"/>
+            <TextView
+                android:id="@+id/build_AGE"
+                android:textColor="@android:color/holo_green_light"
+                android:text="2333"
+                android:textSize="20sp"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+        </LinearLayout>
+
+        <View style="@style/bg_line"/>
+
+        <LinearLayout
+
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/build_button_restart"
+                android:layout_weight="1"
+                android:text="刷新属性"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+            <Button
+                android:id="@+id/build_button_qued"
+                android:layout_weight="1"
+                android:text="确定"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!--分割两部分-->
+    <TextView
+        android:text=""
+        android:layout_width="match_parent"
+        android:layout_height="10sp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        style="@style/wrap_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_weight="1"
+            android:padding="7sp"
+            android:text="选择职业"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Spinner
+            android:layout_weight="1"
+            android:id="@+id/build_spinner"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+
+         />
+
+
+    </LinearLayout>
+
+</LinearLayout>
+</ScrollView>
