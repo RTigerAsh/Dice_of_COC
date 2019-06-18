@@ -11,6 +11,8 @@
     android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context=".BuildCardActivity">
+
+    <!--第一部分-->
     <LinearLayout
         android:orientation="vertical"
         style="@style/wrap_layout"
@@ -44,7 +46,7 @@
             android:id="@+id/build_STR"
             android:gravity="center"
             android:textColor="@android:color/holo_green_light"
-            android:text="23333"
+            android:text="0"
             android:textSize="20sp"
             android:layout_weight="1"
             android:layout_width="match_parent"
@@ -62,7 +64,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="56"
+                android:text="0"
                 android:textSize="11sp"/>
             <View style="@style/bg_line"/>
             <TextView
@@ -71,7 +73,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="56"
+                android:text="0"
                 android:textSize="11sp"/>
 
         </LinearLayout>
@@ -98,7 +100,7 @@
                 android:id="@+id/build_CON"
                 android:gravity="center"
                 android:textColor="@android:color/holo_green_light"
-                android:text="233"
+                android:text="0"
                 android:textSize="20sp"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
@@ -115,7 +117,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="56"
+                    android:text="0"
                     android:textSize="11sp"/>
                 <View style="@style/bg_line"/>
                 <TextView
@@ -124,7 +126,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="56"
+                    android:text="0"
                     android:textSize="11sp"/>
 
             </LinearLayout>
@@ -151,7 +153,7 @@
                 android:id="@+id/build_SIZ"
                 android:gravity="center"
                 android:textColor="@android:color/holo_green_light"
-                android:text="233"
+                android:text="0"
                 android:textSize="20sp"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
@@ -168,7 +170,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="56"
+                    android:text="0"
                     android:textSize="11sp"/>
                 <View style="@style/bg_line"/>
                 <TextView
@@ -177,7 +179,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="56"
+                    android:text="0"
                     android:textSize="11sp"/>
 
             </LinearLayout>
@@ -204,7 +206,7 @@
                 android:id="@+id/build_DEX"
                 android:gravity="center"
                 android:textColor="@android:color/holo_green_light"
-                android:text="23"
+                android:text="0"
                 android:textSize="20sp"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
@@ -222,7 +224,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="56"
+                    android:text="0"
                     android:textSize="11sp"/>
                 <View style="@style/bg_line"/>
                 <TextView
@@ -231,7 +233,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="56"
+                    android:text="0"
                     android:textSize="11sp"/>
 
             </LinearLayout>
@@ -259,7 +261,7 @@
                 android:id="@+id/build_APP"
                 android:gravity="center"
                 android:textColor="@android:color/holo_green_light"
-                android:text="2333"
+                android:text="0"
                 android:textSize="20sp"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
@@ -277,7 +279,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="56"
+                    android:text="0"
                     android:textSize="11sp"/>
                 <View style="@style/bg_line"/>
                 <TextView
@@ -286,7 +288,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="56"
+                    android:text="0"
                     android:textSize="11sp"/>
 
             </LinearLayout>
@@ -313,7 +315,7 @@
                 android:id="@+id/build_INT"
                 android:gravity="center"
                 android:textColor="@android:color/holo_green_light"
-                android:text="233"
+                android:text="0"
                 android:textSize="20sp"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
@@ -331,7 +333,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="56"
+                    android:text="0"
                     android:textSize="11sp"/>
                 <View style="@style/bg_line"/>
                 <TextView
@@ -340,7 +342,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="56"
+                    android:text="0"
                     android:textSize="11sp"/>
 
             </LinearLayout>
@@ -367,7 +369,7 @@
                 android:id="@+id/build_POW"
                 android:gravity="center"
                 android:textColor="@android:color/holo_green_light"
-                android:text="23333333"
+                android:text="0"
                 android:textSize="20sp"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
@@ -385,7 +387,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="56"
+                    android:text="0"
                     android:textSize="11sp"/>
                 <View style="@style/bg_line"/>
                 <TextView
@@ -394,7 +396,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="56"
+                    android:text="0"
                     android:textSize="11sp"/>
 
             </LinearLayout>
@@ -419,7 +421,7 @@
                     android:id="@+id/build_EDU"
                     android:gravity="center"
                     android:textColor="@android:color/holo_green_light"
-                    android:text="23333"
+                    android:text="0"
                     android:textSize="20sp"
                     android:layout_weight="1"
                     android:layout_width="match_parent"
@@ -436,7 +438,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="56"
+                    android:text="0"
                     android:textSize="11sp"/>
                 <View style="@style/bg_line"/>
                 <TextView
@@ -445,7 +447,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="56"
+                    android:text="0"
                     android:textSize="11sp"/>
 
             </LinearLayout>
@@ -469,7 +471,7 @@
             <TextView
                 android:id="@+id/build_LUCKY"
                 android:textColor="@android:color/holo_green_light"
-                android:text="23333"
+                android:text="0"
                 android:textSize="20sp"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
@@ -482,11 +484,13 @@
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/holo_blue_dark"
                 android:textSize="20sp"/>
-            <TextView
+
+            <EditText
                 android:id="@+id/build_AGE"
                 android:textColor="@android:color/holo_green_light"
-                android:text="2333"
                 android:textSize="20sp"
+                android:hint="输入"
+                android:inputType="number"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -498,24 +502,135 @@
 
         <LinearLayout
 
-            android:orientation="horizontal"
+            android:id="@+id/build_button_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/build_button_restart"
-                android:layout_weight="1"
-                android:text="刷新属性"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="刷新属性" />
+
             <Button
                 android:id="@+id/build_button_qued"
-                android:layout_weight="1"
-                android:text="确定"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="确定" />
 
         </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:text=""
+        android:layout_width="match_parent"
+        android:layout_height="10sp" />
+
+    <!--额外属性-->
+    <LinearLayout
+        android:id="@+id/layout_main_Attributes"
+        android:orientation="vertical"
+        style="@style/wrap_layout"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:padding="7sp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="DB"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:text="体型"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:text="SAN值"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:text="移动"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <View
+            style="@style/bg_line"/>
+
+        <LinearLayout
+            android:padding="10sp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_gravity="center"
+                android:id="@+id/text_DB"
+                android:text="5"
+                android:textSize="17sp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="20sp" />
+
+            <TextView
+                android:id="@+id/text_TX"
+                android:text=""
+                android:layout_gravity="center"
+                android:textSize="17sp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/text_SAN"
+                android:textSize="17sp"
+                android:layout_gravity="center"
+                android:text=""
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/text_MOV"
+                android:textSize="17sp"
+                android:layout_gravity="center"
+                android:text=""
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
 
     </LinearLayout>
 
@@ -525,6 +640,7 @@
         android:layout_width="match_parent"
         android:layout_height="10sp" />
 
+    <!--第二部分-->
     <LinearLayout
         android:orientation="horizontal"
         style="@style/wrap_layout"
@@ -537,19 +653,150 @@
             android:gravity="center"
             android:textSize="20sp"
             android:textColor="@color/black"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/careerName_tv"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <!--职业列表-->
+    <cn.edu.swufe.dice_of_coc.MyScrollView
+        android:padding="10sp"
+        android:id="@+id/ScrollView_list"
+        android:layout_width="match_parent"
+        android:layout_height="380sp">
+
+        <LinearLayout
+
+            android:id="@+id/career_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        </LinearLayout>
+    </cn.edu.swufe.dice_of_coc.MyScrollView>
+
+    <!--用来显示本职技能的TV-->
+    <TextView
+        android:id="@+id/careerText"
+        android:text=""
+        android:gravity="center"
+        android:padding="14sp"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!--显示技能总点数-->
+    <LinearLayout
+        android:padding="12sp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="本职技能点："
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:textSize="15sp"/>
+        <TextView
+            android:id="@+id/build_own_point"
+            android:textColor="@android:color/holo_green_light"
+            android:text="0"
+            android:gravity="center"
+            android:textSize="19sp"
+            android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <Spinner
+        <TextView
+            android:text="兴趣技能点:"
+            android:layout_width="match_parent"
             android:layout_weight="1"
-            android:id="@+id/build_spinner"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:textSize="15sp"/>
 
-         />
+        <TextView
+            android:id="@+id/build_like_point"
+            android:textColor="@android:color/holo_green_light"
+            android:text="0"
+            android:gravity="center"
+            android:textSize="19sp"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
 
     </LinearLayout>
 
+    <!--表头-->
+    <LinearLayout
+        android:padding="10sp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="技能名"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:layout_weight="3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+
+
+        <TextView
+            android:text="本职"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:layout_weight="3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+        <View style="@style/bg_line_v"/>
+
+        <TextView
+            android:text="技能点"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:layout_weight="9"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+
+
+
+    </LinearLayout>
+
+    <!--第三部分-->
+    <cn.edu.swufe.dice_of_coc.MyScrollView
+        android:id="@+id/skill_list_scrolview"
+        android:padding="10sp"
+        android:layout_width="match_parent"
+        android:layout_height="390sp"
+        android:visibility="gone">
+        
+        <LinearLayout
+            android:id="@+id/skill_list_layout"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </LinearLayout>
+    </cn.edu.swufe.dice_of_coc.MyScrollView>
+    
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="20sp" />
+
 </LinearLayout>
+
 </ScrollView>

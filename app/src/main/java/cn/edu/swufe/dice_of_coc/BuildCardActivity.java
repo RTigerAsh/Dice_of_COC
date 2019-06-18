@@ -1,17 +1,40 @@
 package cn.edu.swufe.dice_of_coc;
 
+import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.LoginFilter;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
 public class BuildCardActivity extends AppCompatActivity {
-    private Spinner spinner ;
     private TextView tv_STR,tv_CON,tv_SIZ,tv_DEX, tv_APP,tv_INT,tv_POW,tv_EDU,tv_Lucky;
     private TextView tv_STR_half,tv_STR_fif,
             tv_CON_half,tv_CON_fif,
@@ -21,6 +44,10 @@ public class BuildCardActivity extends AppCompatActivity {
             tv_INT_half,tv_INT_fif,
             tv_POW_half,tv_POW_fif,
             tv_EDU_half,tv_EDU_fif;
+    private EditText ed_AGE ;
+
+    public int STR=0,CON=0,SIZ=0,DEX=0,APP=0,INT=0,POW=0,EDU=0,Lucky=0;
+
     private Button bt_Restart,bt_Qued;
 
     @Override
@@ -28,28 +55,37 @@ public class BuildCardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_build_card);
 
-        spinner =findViewById(R.id.build_spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.spinner,android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setPrompt("选择");
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {//通过此方法为下拉列表设置点击事件
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String text= spinner.getItemAtPosition(i).toString();
-                //Toast.makeText(getActivity(),text,Toast.LENGTH_SHORT).show();
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-            }
-        });
+
+        List<CellDataContainer> cellDataContainerList = null;
+        try {
+            cellDataContainerList = readDataFromExcel();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }catch (NullPointerException ei){
+            ei.printStackTrace();
+        }
+        List<CellDataContainer2> cellDataContainerList2 = null;
+        try {
+            cellDataContainerList2 = readDataFromExcel2();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }catch (NullPointerException ei){
+            ei.printStackTrace();
+        }
+
+        writeDataToSQLite(cellDataContainerList);
+        writeDataToSQLite2(cellDataContainerList2);
 
 
         intiFirst();
         intiSecond();
+        intiThird();
         return;
     }
+
+
+
     private void intiFirst() {
         tv_STR=findViewById(R.id.build_STR);
         tv_CON=findViewById(R.id.build_CON);
@@ -60,6 +96,8 @@ public class BuildCardActivity extends AppCompatActivity {
         tv_POW=findViewById(R.id.build_POW);
         tv_EDU=findViewById(R.id.build_EDU);
         tv_Lucky=findViewById(R.id.build_LUCKY);
+
+        ed_AGE=findViewById(R.id.build_AGE);
 
         tv_STR_half=findViewById(R.id.build_STR_half);tv_STR_fif=findViewById(R.id.build_STR_fif);
         tv_CON_half=findViewById(R.id.build_CON_half);tv_CON_fif=findViewById(R.id.build_CON_fif);
@@ -73,11 +111,39 @@ public class BuildCardActivity extends AppCompatActivity {
         bt_Restart=findViewById(R.id.build_button_restart);
         bt_Qued=findViewById(R.id.build_button_qued);
 
+        ed_AGE.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.toString().isEmpty()==false){
+
+                    int value =Integer.valueOf(s.toString());
+                    Log.i("onTextChanged", "onTextChanged: "+value);
+                    if (value<0){
+                        ed_AGE.setText("15");
+                    }else if (value>=0&&value<15){
+                        Toast.makeText(BuildCardActivity.this,"建议年龄不能小于15", Toast.LENGTH_SHORT).show();
+                    }else if (value>90){
+                        ed_AGE.setText("90");
+                       //Toast.makeText(BuildCardActivity.this,"建议年龄不能大于90", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
         bt_Restart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int STR,CON,SIZ,DEX,APP,INT,POW,EDU,Lucky;
+                //final int STR,CON,SIZ,DEX,APP,INT,POW,EDU,Lucky;
                 STR = 5*(3+(int)(Math.random()*6)+(int)(Math.random()*6)+(int)(Math.random()*6));
                 CON = 5*(3+(int)(Math.random()*6)+(int)(Math.random()*6)+(int)(Math.random()*6));
                 SIZ= 5*(8+(int)(Math.random()*6)+(int)(Math.random()*6));
@@ -124,6 +190,300 @@ public class BuildCardActivity extends AppCompatActivity {
         bt_Qued.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!ed_AGE.getText().equals("")){
+
+                    LinearLayout buttonlayout = findViewById(R.id.build_button_layout);
+                    LinearLayout mainAt = findViewById(R.id.layout_main_Attributes);
+                    TextView tv_DB,tv_TX,tv_SAN,tv_MOV;
+                    tv_DB=findViewById(R.id.text_DB);
+                    tv_TX=findViewById(R.id.text_TX);
+                    tv_SAN=findViewById(R.id.text_SAN);
+                    tv_MOV=findViewById(R.id.text_MOV);
+                    int MOV = 0;
+                    if (DEX<SIZ&&STR<SIZ){
+                        MOV=7;
+                    }else if (DEX<=SIZ||STR<=SIZ){
+                        MOV=8;
+                    }else if (DEX>SIZ||STR>SIZ){
+                        MOV=9;
+                    }
+
+                    mainAt.setVisibility(View.VISIBLE);
+                    buttonlayout.setVisibility(View.GONE);
+
+
+                    int value=0;
+                    value = Integer.parseInt(ed_AGE.getText().toString());
+    //                    15-19 岁：力量和体型各减５点。教育减５点。决
+    //                    定幸运值时可以骰２次并取较好的一次。
+    //                    20-39 岁：对教育进行１次成长检定。
+    //                    40-49 岁：对教育进行２次成长检定。力量体质
+    //                    敏捷合计减少５点。外貌减５点。
+    //                    50-59 岁：对教育进行３次成长检定。力量体质敏
+    //                    捷合计减少１０点。外貌减１０点。
+    //                    60-69 岁：对教育进行４次成长检定。力量体质敏
+    //                    捷合计减少２０点。外貌减１５点。
+    //                    70-79 岁：对教育进行４次成长检定。力量体质敏
+    //                    捷合计减少４０点。外貌减２０点。
+    //                    80-89 岁：对教育进行４次成长检定。力量体质敏
+    //                    捷合计减少８０点。外貌减２５点。
+                    if (15<=value&&value<=19){
+                        STR=STR-5;
+                        SIZ=SIZ-5;
+                        EDU=EDU-5;
+                        if (((int)(Math.random()*100)+1)>EDU) {
+                            int eduint=(int) (Math.random() * 10) + 1;
+                            EDU = EDU + eduint;
+                            Toast.makeText(BuildCardActivity.this,"教育检定成功，EDU+"+eduint, Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(BuildCardActivity.this,"教育检定失败", Toast.LENGTH_SHORT).show();
+                        }
+
+                        tv_STR.setText(STR+"");
+                        tv_SIZ.setText(SIZ+"");
+                        tv_EDU.setText(EDU+"");
+
+
+                        tv_STR_half.setText(STR/2+"");
+                        tv_STR_fif.setText(STR/5+"");
+                        tv_SIZ_half.setText(SIZ/2+"");
+                        tv_SIZ_fif.setText(SIZ/5+"");
+                        tv_EDU_half.setText(EDU/2+"");
+                        tv_EDU_fif.setText(EDU/5+"");
+
+
+                    }else if (20<=value&&value<=39){
+                        if (((int)(Math.random()*100)+1)>EDU) {
+                            int eduint=(int) (Math.random() * 10) + 1;
+                            EDU = EDU + eduint;
+                            if(EDU>99){
+                                EDU=99;
+                            }
+                            Toast.makeText(BuildCardActivity.this,"教育检定成功，EDU+"+eduint, Toast.LENGTH_SHORT).show();
+
+                        }else{
+                            Toast.makeText(BuildCardActivity.this,"教育检定失败", Toast.LENGTH_SHORT).show();
+                        }
+                        tv_EDU.setText(EDU+"");
+                        tv_EDU_half.setText(EDU/2+"");
+                        tv_EDU_fif.setText(EDU/5+"");
+
+                    }else if(40<=value&&value<=49){
+
+                        for(int i=1;i<3;i++){
+                            if (((int)(Math.random()*100)+1)>EDU) {
+                                int eduint=(int) (Math.random() * 10) + 1;
+                                EDU = EDU + eduint;
+                                if(EDU>99){
+                                    EDU=99;
+                                }
+                            }
+                            while (i==2){
+                                Toast.makeText(BuildCardActivity.this,"教育检定结束(暗骰)", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        STR=STR-2;
+                        CON=CON-2;
+                        DEX=DEX-1;
+                        MOV=MOV-1;
+
+
+                        tv_STR.setText(STR+"");
+                        tv_CON.setText(CON+"");
+                        tv_DEX.setText(DEX+"");
+
+                        tv_STR_half.setText(STR/2+"");
+                        tv_STR_fif.setText(STR/5+"");
+                        tv_CON_half.setText(CON/2+"");
+                        tv_CON_fif.setText(CON/5+"");
+                        tv_DEX_half.setText(DEX/2+"");
+                        tv_DEX_fif.setText(DEX/5+"");
+
+                        tv_EDU.setText(EDU+"");
+                        tv_EDU_half.setText(EDU/2+"");
+                        tv_EDU_fif.setText(EDU/5+"");
+
+
+
+                    }else if(50<=value&&value<=59){
+                        for(int i=1;i<4;i++){
+                            if (((int)(Math.random()*100)+1)>EDU) {
+                                int eduint=(int) (Math.random() * 10) + 1;
+                                EDU = EDU + eduint;
+                                if(EDU>99){
+                                    EDU=99;
+                                }
+                            }
+                            while (i==3){
+                                Toast.makeText(BuildCardActivity.this,"教育检定结束(暗骰)", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        STR=STR-3;
+                        CON=CON-3;
+                        DEX=DEX-4;
+                        MOV=MOV-2;
+
+
+                        tv_STR.setText(STR+"");
+                        tv_CON.setText(CON+"");
+                        tv_DEX.setText(DEX+"");
+
+                        tv_STR_half.setText(STR/2+"");
+                        tv_STR_fif.setText(STR/5+"");
+                        tv_CON_half.setText(CON/2+"");
+                        tv_CON_fif.setText(CON/5+"");
+                        tv_DEX_half.setText(DEX/2+"");
+                        tv_DEX_fif.setText(DEX/5+"");
+
+                        tv_EDU.setText(EDU+"");
+                        tv_EDU_half.setText(EDU/2+"");
+                        tv_EDU_fif.setText(EDU/5+"");
+
+                    }else if(60<=value&&value<=69){
+                        for(int i=1;i<5;i++){
+                            if (((int)(Math.random()*100)+1)>EDU) {
+                                int eduint=(int) (Math.random() * 10) + 1;
+                                EDU = EDU + eduint;
+                                if(EDU>99){
+                                    EDU=99;
+                                }
+                            }
+                            while (i==5){
+                                Toast.makeText(BuildCardActivity.this,"教育检定结束(暗骰)", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        STR=STR-7;
+                        CON=CON-7;
+                        DEX=DEX-6;
+                        MOV=MOV-3;
+
+
+                        tv_STR.setText(STR+"");
+                        tv_CON.setText(CON+"");
+                        tv_DEX.setText(DEX+"");
+
+                        tv_STR_half.setText(STR/2+"");
+                        tv_STR_fif.setText(STR/5+"");
+                        tv_CON_half.setText(CON/2+"");
+                        tv_CON_fif.setText(CON/5+"");
+                        tv_DEX_half.setText(DEX/2+"");
+                        tv_DEX_fif.setText(DEX/5+"");
+
+                        tv_EDU.setText(EDU+"");
+                        tv_EDU_half.setText(EDU/2+"");
+                        tv_EDU_fif.setText(EDU/5+"");
+
+                    }else if(70<=value&&value<=79){
+                        for(int i=1;i<5;i++){
+                            if (((int)(Math.random()*100)+1)>EDU) {
+                                int eduint=(int) (Math.random() * 10) + 1;
+                                EDU = EDU + eduint;
+                                if(EDU>99){
+                                    EDU=99;
+                                }
+                            }
+                            while (i==5){
+                                Toast.makeText(BuildCardActivity.this,"教育检定结束(暗骰)", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        STR=STR-13;
+                        CON=CON-13;
+                        DEX=DEX-14;
+                        MOV=MOV-4;
+
+
+                        tv_STR.setText(STR+"");
+                        tv_CON.setText(CON+"");
+                        tv_DEX.setText(DEX+"");
+
+                        tv_STR_half.setText(STR/2+"");
+                        tv_STR_fif.setText(STR/5+"");
+                        tv_CON_half.setText(CON/2+"");
+                        tv_CON_fif.setText(CON/5+"");
+                        tv_DEX_half.setText(DEX/2+"");
+                        tv_DEX_fif.setText(DEX/5+"");
+
+                        tv_EDU.setText(EDU+"");
+                        tv_EDU_half.setText(EDU/2+"");
+                        tv_EDU_fif.setText(EDU/5+"");
+
+                    }else if(80<=value&&value<=89){
+                        for(int i=1;i<5;i++){
+                            if (((int)(Math.random()*100)+1)>EDU) {
+                                int eduint=(int) (Math.random() * 10) + 1;
+                                EDU = EDU + eduint;
+                                if(EDU>99){
+                                    EDU=99;
+                                }
+                            }
+                            while (i==5){
+                                Toast.makeText(BuildCardActivity.this,"教育检定结束(暗骰)", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        STR=STR-27;
+                        CON=CON-27;
+                        DEX=DEX-26;
+                        MOV=MOV-5;
+
+
+                        tv_STR.setText(STR+"");
+                        tv_CON.setText(CON+"");
+                        tv_DEX.setText(DEX+"");
+
+                        tv_STR_half.setText(STR/2+"");
+                        tv_STR_fif.setText(STR/5+"");
+                        tv_CON_half.setText(CON/2+"");
+                        tv_CON_fif.setText(CON/5+"");
+                        tv_DEX_half.setText(DEX/2+"");
+                        tv_DEX_fif.setText(DEX/5+"");
+
+                        tv_EDU.setText(EDU+"");
+                        tv_EDU_half.setText(EDU/2+"");
+                        tv_EDU_fif.setText(EDU/5+"");
+
+                    }
+
+                    ed_AGE.setEnabled(false);
+                    int db=STR+SIZ;
+                    if(db>=2&&db<=64){
+                        tv_DB.setText(""+"-2");
+                        tv_TX.setText(""+"-2");
+                    }else if (db>=65&&db<=84){
+                        tv_DB.setText(""+"-1");
+                        tv_TX.setText(""+"-1");
+                    }else if (db>=85&&db<=124){
+                        tv_DB.setText(""+"0");
+                        tv_TX.setText(""+"0");
+                    }else if (db>=125&&db<=164){
+                        tv_DB.setText(""+"+1d4");
+                        tv_TX.setText(""+"1");
+                    }else if (db>=165&&db<=204){
+                        tv_DB.setText(""+"+1d6");
+                        tv_TX.setText(""+"2");
+                    }else if (db>=205&&db<=284){
+                        tv_DB.setText(""+"+2d6");
+                        tv_TX.setText(""+"3");
+                    }else if (db>=285&&db<=364){
+                        tv_DB.setText(""+"+3d6");
+                        tv_TX.setText(""+"4");
+                    }else if (db>=365&&db<=444){
+                        tv_DB.setText(""+"+4d6");
+                        tv_TX.setText(""+"5");
+                    }else if (db>=445&&db<=524){
+                        tv_DB.setText(""+"+5d6");
+                        tv_TX.setText(""+"6");
+                    }
+                    tv_SAN.setText(""+INT);
+
+                    tv_MOV.setText(""+MOV);
+                }else {
+                    Toast.makeText(BuildCardActivity.this,"年龄不能为空", Toast.LENGTH_SHORT).show();
+                }
+
 
             }
         });
@@ -133,6 +493,437 @@ public class BuildCardActivity extends AppCompatActivity {
     }
 
     private void intiSecond() {
+            //List<view> List1 = null;
+        List<View> List1 = new ArrayList<>();
+        SQLiteDatabase db = DBHelper.getInstance(this).getReadableDatabase();
+        Cursor cursor = db.query(DBHelper.TABLE_NAME_1,null,null,null,null,null,null);
+        if (cursor!=null){
+            List1 = new ArrayList<>();
+            //cursor.moveToPosition(stPostion); //移动到开始行
+            while (cursor.moveToNext()){
+                CareerItem item = new CareerItem();
+                item.setId(cursor.getInt(cursor.getColumnIndex("id")));
+                item.setCareerName(cursor.getString(cursor.getColumnIndex("name")));
+                item.setCareerReputation(cursor.getString(cursor.getColumnIndex("reputation")));
+                item.setCareerAttributes(cursor.getString(cursor.getColumnIndex("attributes")));
+                item.setCareerSkill(cursor.getString(cursor.getColumnIndex("skill")));
+
+                View view = item.setView(item);
+                List1.add(view);
+            }
+            cursor.close();
+        }
+        db.close();
+
+        final LinearLayout careerlist = findViewById(R.id.career_list);
+        final TextView careetv = findViewById(R.id.careerText);
+        final TextView cartttvname = findViewById(R.id.careerName_tv);
+
+
+        for (int i = 0; i < List1.size(); i++) {
+            final int position = i;
+            careerlist.addView(List1.get(i));
+
+            //按照参数设置点击事件响应
+            final List<View> finalList = List1;
+            final int finalI = i;
+            List1.get(i).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    TextView textView = finalList.get(finalI).findViewById(R.id.careerSkill);
+                    TextView textView2 = finalList.get(finalI).findViewById(R.id.careerName);
+                    TextView textView3 = finalList.get(finalI).findViewById(R.id.careerAttributes);
+
+                    TextView textView1 = findViewById(R.id.careerText);
+                    TextView textView11 = findViewById(R.id.build_own_point);
+                    TextView textView12 = findViewById(R.id.build_like_point);
+
+                    MyScrollView myScrollView,myView2;
+                    myScrollView =findViewById(R.id.ScrollView_list);
+                    myView2 =(MyScrollView)findViewById(R.id.skill_list_scrolview);
+
+                    String str = textView.getText().toString();
+                    String strName = textView2.getText().toString();
+                    String strAtt = textView3.getText().toString();
+
+                    cartttvname.setText(strName);
+                    careetv.setText("职业本职技能：\n"+str);
+                    if(strAtt.equals("教育×4")){
+                        textView11.setText(""+EDU*4);
+                    }else if(strAtt.equals("教育×2＋敏捷×2")){
+                        textView11.setText(""+(EDU*2+DEX*2));
+                    }else if(strAtt.equals("教育×2＋外貌×2")){
+                        textView11.setText(""+(EDU*2+APP*2));
+                    }else if(strAtt.equals("教育×2＋力量或敏捷×2")){
+                        textView11.setText(""+(EDU*2+STR*2));
+                    }else if(strAtt.equals("教育×2＋外貌或意志×2")){
+                        textView11.setText(""+(EDU*2+APP*2));
+                    }else if(strAtt.equals("教育×2＋敏捷或意志×2")){
+                        textView11.setText(""+(EDU*2+DEX*2));
+                    }else if(strAtt.equals("教育×2＋力量×2")){
+                        textView11.setText(""+(EDU*2+STR*2));
+                    }
+
+                    textView12.setText(""+INT*2);
+                    myScrollView.setVisibility(View.GONE);
+                    myView2.setVisibility(View.VISIBLE);
+                    textView1.setVisibility(View.VISIBLE);
+
+                }
+            });
+        }
+        Log.i("intiSecond", "careerlist----->"+careerlist);
+    }
+
+    private void intiThird() {
+        List<View> List1 = new ArrayList<>();
+        SQLiteDatabase db = DBHelper.getInstance(this).getReadableDatabase();
+        Cursor cursor = db.query(DBHelper.TABLE_NAME_2,null,null,null,null,null,null);
+        if (cursor!=null){
+            List1 = new ArrayList<>();
+            //cursor.moveToPosition(stPostion); //移动到开始行
+            while (cursor.moveToNext()){
+                SkillItem item = new SkillItem();
+                item.setId(cursor.getInt(cursor.getColumnIndex("id")));
+                item.setSkillName(cursor.getString(cursor.getColumnIndex("name")));
+                item.setSkillStart(cursor.getString(cursor.getColumnIndex("start")));
+
+                View view = item.setView(item);
+                List1.add(view);
+            }
+            cursor.close();
+        }
+        db.close();
+
+        final LinearLayout skilllist = findViewById(R.id.skill_list_layout);
+
+        for (int i = 0; i < List1.size(); i++) {
+            final int position = i;
+            skilllist.addView(List1.get(i));
+
+            //按照参数设置点击事件响应
+            final List<View> finalList2 = List1;
+            final int final2 = i;
+            List1.get(i).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //获得控件
+                    final TextView textView = finalList2.get(final2).findViewById(R.id.skill_point);
+                    final TextView textView_half = finalList2.get(final2).findViewById(R.id.build_skill_half);
+                    final TextView textView_fif = finalList2.get(final2).findViewById(R.id.build_skill_fif);
+
+                    final TextView textView11 = findViewById(R.id.build_own_point);
+                    final TextView textView12 = findViewById(R.id.build_like_point);
+
+                    RelativeLayout Add=finalList2.get(final2).findViewById(R.id.button_add);
+                    RelativeLayout Remove=finalList2.get(final2).findViewById(R.id.button_remove);
+
+                    CheckBox checkBox = finalList2.get(final2).findViewById(R.id.checkBox);
+
+
+                    final int tv=0;
+
+
+
+                    //点击加减号，兴趣点，技能总点反应
+                    if (!checkBox.isChecked()){
+                        Add.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if ((int) Math.floor(Float.parseFloat(textView.getText().toString()))<100&&Integer.parseInt(textView12.getText().toString())>0) {
+                                    textView12.setText("" + (Integer.parseInt(textView12.getText().toString())-1));
+                                    textView.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) +1));
+
+                                    textView_fif.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) +1)/5);
+                                    textView_half.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) +1)/2);
+
+                                }else if((int) Math.floor(Float.parseFloat(textView.getText().toString()))>=100){
+                                    textView.setText(""+99);
+                                    textView_fif.setText("" + 99/5);
+                                    textView_half.setText("" + 99/2);
+                                }else if(Integer.parseInt(textView12.getText().toString())<=0){ }
+                            }
+                        });
+                        Add.setOnLongClickListener(new View.OnLongClickListener() {
+                            @Override
+                            public boolean onLongClick(View v) {
+                                if ((int) Math.floor(Float.parseFloat(textView.getText().toString()))<100&&Integer.parseInt(textView12.getText().toString())>0) {
+                                    textView12.setText("" + (Integer.parseInt(textView12.getText().toString())-10));
+                                    textView.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) +10));
+
+                                    textView_fif.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) +10)/5);
+                                    textView_half.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) +10)/2);
+
+                                }else if((int) Math.floor(Float.parseFloat(textView.getText().toString()))>=100){
+                                    textView.setText(""+99);
+                                    textView_fif.setText("" + 99/5);
+                                    textView_half.setText("" + 99/2);
+                                }else if(Integer.parseInt(textView12.getText().toString())<=0){ }
+                                return true;
+                            }
+
+                        });
+                        Remove.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Log.i("onClick", "onClick:   tv =  "+tv);
+                                if ((int) Math.floor(Float.parseFloat(textView.getText().toString()))>tv) {
+                                    textView12.setText("" + (Integer.parseInt(textView12.getText().toString())+1));
+                                    textView.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString()))-1));
+
+                                    textView_fif.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString()))-1)/5);
+                                    textView_half.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString()))-1)/2);
+                                }else if((int) Math.floor(Float.parseFloat(textView.getText().toString()))<=tv){
+                                    textView.setText(""+tv);
+                                }else if(Integer.parseInt(textView12.getText().toString())<0){ }
+                            }
+                        });
+                        Remove.setOnLongClickListener(new View.OnLongClickListener() {
+                            @Override
+                            public boolean onLongClick(View v) {
+                                if ((int) Math.floor(Float.parseFloat(textView.getText().toString()))<100&&Integer.parseInt(textView12.getText().toString())>0) {
+                                    textView12.setText("" + (Integer.parseInt(textView12.getText().toString())+10));
+                                    textView.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) -10));
+
+                                    textView_fif.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) -10)/5);
+                                    textView_half.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) +10)/2);
+
+                                }else if((int) Math.floor(Float.parseFloat(textView.getText().toString()))>=100){
+                                    textView.setText(""+99);
+                                    textView_fif.setText("" + 99/5);
+                                    textView_half.setText("" + 99/2);
+                                }else if(Integer.parseInt(textView12.getText().toString())<=0){ }
+                                return true;
+                            }
+                        });
+                    }else {//勾选之后点击加减号，本职技能点，技能总点反应
+                        Add.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if ((int) Math.floor(Float.parseFloat(textView.getText().toString()))<100&&Integer.parseInt(textView11.getText().toString())>=0) {
+                                    textView11.setText("" + (Integer.parseInt(textView11.getText().toString())-1));
+                                    textView.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) +1));
+
+                                    textView_fif.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) +1)/5);
+                                    textView_half.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) +1)/2);
+
+                                }else if((int) Math.floor(Float.parseFloat(textView.getText().toString()))>=100){
+                                    textView.setText(""+99);
+                                    textView_fif.setText("" + 99/5);
+                                    textView_half.setText("" + 99/2);
+                                }else if(Integer.parseInt(textView11.getText().toString())<0){ }
+                            }
+                        });
+
+                        Add.setOnLongClickListener(new View.OnLongClickListener() {
+                            @Override
+                            public boolean onLongClick(View v) {
+                                if ((int) Math.floor(Float.parseFloat(textView.getText().toString()))<100&&Integer.parseInt(textView11.getText().toString())>0) {
+                                    textView11.setText("" + (Integer.parseInt(textView11.getText().toString())-10));
+                                    textView.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) +10));
+
+                                    textView_fif.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) +10)/5);
+                                    textView_half.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) +10)/2);
+
+                                }else if((int) Math.floor(Float.parseFloat(textView.getText().toString()))>=100){
+                                    textView.setText(""+99);
+                                    textView_fif.setText("" + 99/5);
+                                    textView_half.setText("" + 99/2);
+                                }else if(Integer.parseInt(textView11.getText().toString())<=0){ }
+                                return true;
+                            }
+
+                        });
+                        Remove.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if ((int) Math.floor(Float.parseFloat(textView.getText().toString()))>tv) {
+                                    textView11.setText("" + (Integer.parseInt(textView11.getText().toString())+1));
+                                    textView.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) -1));
+
+                                    textView_fif.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) -1)/5);
+                                    textView_half.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) -1)/2);
+                                }else if((int) Math.floor(Float.parseFloat(textView.getText().toString()))<=tv){
+                                    textView.setText(""+tv);
+                                }else if(Integer.parseInt(textView11.getText().toString())<0){ }
+                            }
+                        });
+                        Remove.setOnLongClickListener(new View.OnLongClickListener() {
+                            @Override
+                            public boolean onLongClick(View v) {
+                                if ((int) Math.floor(Float.parseFloat(textView.getText().toString()))<100&&Integer.parseInt(textView11.getText().toString())>0) {
+                                    textView11.setText("" + (Integer.parseInt(textView11.getText().toString())+10));
+                                    textView.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) -10));
+
+                                    textView_fif.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) -10)/5);
+                                    textView_half.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) +10)/2);
+
+                                }else if((int) Math.floor(Float.parseFloat(textView.getText().toString()))>=100){
+                                    textView.setText(""+99);
+                                    textView_fif.setText("" + 99/5);
+                                    textView_half.setText("" + 99/2);
+                                }else if(Integer.parseInt(textView11.getText().toString())<=0){ }
+                                return true;
+                            }
+                        });
+
+                    }
+
+                }
+            });
+        }
+        Log.i("intiThird", "skilllist----->"+skilllist);
+    }
+
+    // 第二阶段，把从Excel报表中读出来的数据导出，写入到SQLite数据库中。
+    private void writeDataToSQLite(List<CellDataContainer> cellDataContainer) throws NullPointerException{
+        SQLiteDatabase mSQLiteDatabase = DBHelper.getInstance(this).getWritableDatabase();
+
+        // 从Excel报表中读取出来的数据首行（第0行）是列名，故跳过。
+        for (int i = 1; i < cellDataContainer.size(); i++) {
+           CellDataContainer container = cellDataContainer.get(i);
+
+            ContentValues contentValues = getContentValues(container.id, container.name,
+                    container.reputation, container.attributes,container.skill);
+
+            mSQLiteDatabase.insert(DBHelper.TABLE_NAME_1, null, contentValues);
+        }
+
+        mSQLiteDatabase.close();
+    }
+
+    private void writeDataToSQLite2(List<CellDataContainer2> cellDataContainer2) throws NullPointerException{
+        SQLiteDatabase mSQLiteDatabase = DBHelper.getInstance(this).getWritableDatabase();
+
+        // 从Excel报表中读取出来的数据首行（第0行）是列名，故跳过。
+        for (int i = 1; i < cellDataContainer2.size(); i++) {
+            CellDataContainer2 container2 = cellDataContainer2.get(i);
+
+            ContentValues contentValues2 = getContentValues2(container2.skid, container2.skname,
+                    container2.skstart);
+
+            mSQLiteDatabase.insert(DBHelper.TABLE_NAME_2, null, contentValues2);
+        }
+
+        mSQLiteDatabase.close();
+    }
+
+    private ContentValues getContentValues(String id, String name,String reputation,String attributes,String skill) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DBHelper.CAREER_ID, id);
+        contentValues.put(DBHelper.CAREER_NAME, name);
+        contentValues.put(DBHelper.CAREER_REPUTATION, reputation);
+        contentValues.put(DBHelper.CAREER_ATTRIBUTES, attributes);
+        contentValues.put(DBHelper.CAREER_SKILL, skill);
+
+        return contentValues;
+    }
+
+    private ContentValues getContentValues2(String id, String name,String start) {
+        ContentValues contentValues2 = new ContentValues();
+        contentValues2.put(DBHelper.SKILL_ID, id);
+        contentValues2.put(DBHelper.SKILL_NAME, name);
+        contentValues2.put(DBHelper.SKILL_ST, start);
+
+        return contentValues2;
+    }
+
+
+    // 第一阶段，从Excel报表中读出数据。
+    private List<CellDataContainer> readDataFromExcel() throws IOException {
+        //File xlsFile = new File(String.valueOf(getResources().getAssets().open("weapon.xls")), "weapon.xls");
+
+        HSSFWorkbook mWorkbook = null;
+        try {
+            //FileInputStream fis = new FileInputStream(xlsFile);
+            InputStream fis = getResources().getAssets().open("weapon.xls");
+            Log.i("readDataFromExcel", "从表中读取数据: fis="+fis);
+            mWorkbook = new HSSFWorkbook(fis);
+            Log.i("readDataFromExcel", "从表中读取数据2: fis="+fis);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        HSSFSheet mSheet = mWorkbook.getSheet("Sheet2");
+
+        int rowNumber = mSheet.getLastRowNum() + 1;
+        Log.i("rowNumber", "读取表行数: fis="+mSheet.getLastRowNum()+1);
+        Log.i("rowNumber", "读取表列数: fis="+mSheet.getRow(0).getPhysicalNumberOfCells()+1);
+
+
+        List<CellDataContainer> cellDataContainer = new ArrayList<>();
+        for (int row = 0; row < rowNumber; row++) {
+            HSSFRow r = mSheet.getRow(row);
+
+            CellDataContainer container = new CellDataContainer();
+            container.id = r.getCell(0).toString();
+            container.name = r.getCell(1).toString();
+            container.reputation = r.getCell(2).toString();
+            container.attributes = r.getCell(3).toString();
+            container.skill = r.getCell(4).toString();
+
+            Log.i("id", "id: "+container.id);
+
+            cellDataContainer.add(container);
+        }
+
+        return cellDataContainer;
+    }
+
+    private List<CellDataContainer2> readDataFromExcel2() throws IOException {
+        //File xlsFile = new File(String.valueOf(getResources().getAssets().open("weapon.xls")), "weapon.xls");
+
+        HSSFWorkbook mWorkbook = null;
+        try {
+            //FileInputStream fis = new FileInputStream(xlsFile);
+            InputStream fis = getResources().getAssets().open("weapon.xls");
+            Log.i("readDataFromExcel", "从表中读取数据: fis="+fis);
+            mWorkbook = new HSSFWorkbook(fis);
+            Log.i("readDataFromExcel", "从表中读取数据2: fis="+fis);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        HSSFSheet mSheet = mWorkbook.getSheet("Sheet3");
+
+        int rowNumber = mSheet.getLastRowNum() + 1;
+        Log.i("rowNumber", "读取表行数: fis="+mSheet.getLastRowNum()+1);
+        Log.i("rowNumber", "读取表列数: fis="+mSheet.getRow(0).getPhysicalNumberOfCells()+1);
+
+
+        List<CellDataContainer2> cellDataContainer2 = new ArrayList<>();
+        for (int row = 0; row < rowNumber; row++) {
+            HSSFRow r = mSheet.getRow(row);
+
+            CellDataContainer2 container2 = new CellDataContainer2();
+            container2.skid = r.getCell(0).toString();
+            container2.skname = r.getCell(1).toString();
+            container2.skstart = r.getCell(2).toString();
+
+            Log.i("id", "id: "+container2.skid);
+
+            cellDataContainer2.add(container2);
+        }
+
+        return cellDataContainer2;
+    }
+
+
+    //从Excel表中单元读取出来的数据容器。
+    private class CellDataContainer {
+        public String id;
+        public String name;
+        public String reputation;
+        public String attributes;
+        public String skill;
+
+
+    }
+
+    private class CellDataContainer2{
+        public String skid;
+        public  String skname;
+        public String skstart;
 
     }
 

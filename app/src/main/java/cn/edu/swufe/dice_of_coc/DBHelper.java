@@ -9,6 +9,9 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "mydata.db";
 
     static final String TABLE_NAME = "tb_weapons";
+    static final String TABLE_NAME_1 ="tb_career";
+    static final String TABLE_NAME_2 ="tb_skill";
+
 
     public static final String WEAPON_ID = "id";
     public static final String WEAPON_NAME = "name";
@@ -20,6 +23,16 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String WEAPON_PRICE = "price";
     public static final String WEAPON_FAULT = "fault";
     public static final String WEAPON_TIME = "time";
+
+    public static final String CAREER_ID = "id";
+    public static final String CAREER_NAME = "name";
+    public static final String CAREER_REPUTATION = "reputation";
+    public static final String CAREER_ATTRIBUTES = "attributes";
+    public static final String CAREER_SKILL = "skill";
+
+    public static final String SKILL_ID= "id";
+    public static final String SKILL_NAME= "name";
+    public static final String SKILL_ST= "start";
 
     private static DBHelper helper;
 
@@ -37,6 +50,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
+
     public DBHelper(Context context){
         super(context,DB_NAME,null,VERSION);
     }
@@ -48,7 +62,15 @@ public class DBHelper extends SQLiteOpenHelper {
                 + WEAPON_NAME + " varchar(60)," + WEAPON_SKILLS + " varchar(30)," + WEAPON_DAMAGE
                 + " TEXT,"+ WEAPON_LIMIT + " varchar(60)," + WEAPON_VARTIME + " varchar(60)," + WEAPON_NUM
                 + " varchar(60)," + WEAPON_PRICE + " varchar(60)," + WEAPON_FAULT
-                + " varchar(60)," + WEAPON_TIME + " varchar(60)"+")");
+                + " varchar(60)," + WEAPON_TIME + " varchar(60)"+");");
+
+
+        db.execSQL("CREATE TABLE IF NOT EXISTS "+TABLE_NAME_1+" (" + CAREER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + CAREER_NAME + " varchar(60)," + CAREER_REPUTATION + " varchar(15)," + CAREER_ATTRIBUTES
+                + " TEXT,"+ CAREER_SKILL + " varchar(90)" +");");
+
+        db.execSQL("CREATE TABLE IF NOT EXISTS "+TABLE_NAME_2+" (" + SKILL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + SKILL_NAME + " varchar(40)," + SKILL_ST + " varchar(15)" +");");
 
     }
     @Override

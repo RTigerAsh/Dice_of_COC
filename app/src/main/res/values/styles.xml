@@ -57,6 +57,13 @@
         <item name="android:background">@color/border_clo</item>
     </style>
 
+    <!--竖线-->
+    <style name="bg_line_v">
+        <item name="android:layout_width">1px</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/border_clo</item>
+    </style>
+
     <!-- 最外层样式 -->
     <style name="wrap_layout">
         <item name="android:orientation">vertical</item>

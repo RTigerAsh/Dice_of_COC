@@ -1,8 +1,10 @@
 package cn.edu.swufe.dice_of_coc;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +21,8 @@ public class Fragment2 extends Fragment {
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(getActivity().getApplicationContext(),BuildCardActivity.class);
+                startActivity(intent);
                 Toast.makeText(getActivity(), "Fragment2上的按钮被点击了", Toast.LENGTH_SHORT).show();
             }
         });
