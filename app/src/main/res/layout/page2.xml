@@ -1,24 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/fragmentbac"
     android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/page2_img"
+        android:layout_width="300dp"
+        android:layout_height="500dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        app:srcCompat="@mipmap/tc_da" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="205dp"
-        android:layout_gravity="center_horizontal|center_vertical"
-        android:text="这是车卡页面"
-        android:textSize="30sp" />
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="205dp"-->
+        <!--android:layout_gravity="center_horizontal|center_vertical"-->
+        <!--android:text="这是车卡页面"-->
+        <!--android:textSize="30sp" />-->
     <Button
         android:id="@+id/bt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="点这个开始车卡第一步"
+        android:layout_gravity="bottom|center"
+        android:text="创建我的人物卡"
         android:textAllCaps="false"/>
 
 
-</FrameLayout>
+</LinearLayout>

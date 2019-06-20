@@ -61,7 +61,14 @@ public class DiceDialog extends Dialog {
         dice_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String datastr = (times*(1+(int)(Math.random()*endnum)))+"";
+                int fin = 0 ;
+
+                for (int i = 1; i <= times; i++){
+                    int ed = 1+(int)(Math.random()*endnum);
+                    fin=fin+ed;
+                }
+                String datastr =fin+"";
+
                 if(count == 1&&a == 1){
                     datatv.setTextSize(50);
                     a++;
@@ -82,23 +89,22 @@ public class DiceDialog extends Dialog {
         endnum = 3;
 
         //复投次数
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 8; i++) {
             list_times.add("" + i);
         }
         //设置原始数据
         loopView_year.setItems(list_times);
-        for (int i = 0; i < list_times.size(); i++) {
-            if (Integer.parseInt(list_times.get(i)) == 1) {
-                loopView_year.setCurrentPosition(i);
-            }
-        }
+        loopView_year.setCurrentPosition(1);
+//        for (int i = 0; i < list_times.size(); i++) {
+//            if (Integer.parseInt(list_times.get(i)) == 6) {
+//                loopView_year.setCurrentPosition(i);
+//            }
+//        }
 
 
 
         //骰子截止数值
-//        for (int i = 1; i < 101; i++) {
-//            list_end.add("" + i);
-//        }
+
         list_end.add("2");
         list_end.add("3");
         list_end.add("4");
@@ -133,14 +139,12 @@ public class DiceDialog extends Dialog {
     @Override
     protected void onStop() {
         super.onStop();
-        dataCounttv.setText("点击次数：0");
+        dataCounttv.setText("点击次数：0");datatv.setText("0");
+        loopView_year.setCurrentPosition(1);
+        loopView_day.setCurrentPosition(1);
         count = 1;
+        times=1;
     }
-    //    public void selectData(View view) {
-//        String datastr = (times*(1+(int)(Math.random()*endnum)))+"";
-//        datatv.setText(datastr);
-//        //Toast.makeText(this, "你选中的复投次数是：" + times + "截止：" + endnum , Toast.LENGTH_SHORT).show();
-//    }
 
 
 }

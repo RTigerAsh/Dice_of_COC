@@ -11,10 +11,10 @@
         android:icon="@drawable/ic_add_circle_outline_black_48dp"
         android:title="@string/title_card" />
 
-    <item
-        android:id="@+id/navigation_user"
-        android:icon="@drawable/ic_folder_open_black_48dp"
-        android:title="@string/title_user" />
+    <!--<item-->
+        <!--android:id="@+id/navigation_user"-->
+        <!--android:icon="@drawable/ic_folder_open_black_48dp"-->
+        <!--android:title="@string/title_user" />-->
     <item
         android:id="@+id/navigation_setting"
         android:icon="@drawable/ic_content_copy_black_48dp"

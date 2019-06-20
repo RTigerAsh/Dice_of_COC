@@ -12,6 +12,144 @@
     android:layout_height="match_parent"
     tools:context=".BuildCardActivity">
 
+    <!--角色信息-->
+    <LinearLayout
+        android:padding="10sp"
+        android:paddingRight="20sp"
+        android:orientation="vertical"
+        style="@style/wrap_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:padding="7sp"
+            android:text="角色信息"
+            android:gravity="center"
+            android:textSize="25sp"
+            android:textColor="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <View style="@style/bg_line"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="姓名"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textSize="20sp"/>
+
+            <EditText
+                android:id="@+id/build_Name"
+                android:textColor="@android:color/holo_green_light"
+                android:textSize="20sp"
+                android:layout_weight="3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="性别"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textSize="20sp"/>
+
+            <EditText
+                android:id="@+id/build_xingbie"
+                android:textColor="@android:color/holo_green_light"
+                android:textSize="20sp"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:text="时代"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="0.6"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textSize="20sp"/>
+
+            <Spinner
+                android:id="@+id/build_spinner_shidai"
+                android:layout_weight="1.4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="住地"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textSize="20sp"/>
+
+            <EditText
+                android:id="@+id/build_zhudi"
+                android:textColor="@android:color/holo_green_light"
+                android:textSize="20sp"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="故乡"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textSize="20sp"/>
+
+            <EditText
+                android:id="@+id/build_guxiang"
+                android:textColor="@android:color/holo_green_light"
+                android:textSize="20sp"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_qued1"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:text="确定"
+                android:id="@+id/button_qued1"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+
     <!--第一部分-->
     <LinearLayout
         android:orientation="vertical"
@@ -691,91 +829,98 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <!--显示技能总点数-->
+
     <LinearLayout
-        android:padding="12sp"
-        android:orientation="horizontal"
+        android:id="@+id/table_2_3"
+        android:visibility="gone"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-        <TextView
-            android:text="本职技能点："
+        <!--显示技能总点数-->
+        <LinearLayout
+            android:padding="12sp"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
-            android:textSize="15sp"/>
-        <TextView
-            android:id="@+id/build_own_point"
-            android:textColor="@android:color/holo_green_light"
-            android:text="0"
-            android:gravity="center"
-            android:textSize="19sp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="本职技能点："
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"/>
+            <TextView
+                android:id="@+id/build_own_point"
+                android:textColor="@android:color/holo_green_light"
+                android:text="0"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:text="兴趣技能点:"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/build_like_point"
+                android:textColor="@android:color/holo_green_light"
+                android:text="0"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+        </LinearLayout>
+
+        <!--表头-->
+        <LinearLayout
+            android:padding="10sp"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:text="兴趣技能点:"
-            android:layout_width="match_parent"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
-            android:textSize="15sp"/>
-
-        <TextView
-            android:id="@+id/build_like_point"
-            android:textColor="@android:color/holo_green_light"
-            android:text="0"
-            android:gravity="center"
-            android:textSize="19sp"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <TextView
+                android:text="技能名"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:layout_weight="3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
 
 
+
+            <TextView
+                android:text="本职"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:layout_weight="3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+            <View style="@style/bg_line_v"/>
+
+            <TextView
+                android:text="技能点"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:layout_weight="9"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+
+
+
+        </LinearLayout>
     </LinearLayout>
-
-    <!--表头-->
-    <LinearLayout
-        android:padding="10sp"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:text="技能名"
-            android:textColor="@color/black"
-            android:gravity="center"
-            android:layout_weight="3"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content" />
-
-
-
-        <TextView
-            android:text="本职"
-            android:textColor="@color/black"
-            android:gravity="center"
-            android:layout_weight="3"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content" />
-
-        <View style="@style/bg_line_v"/>
-
-        <TextView
-            android:text="技能点"
-            android:textColor="@color/black"
-            android:gravity="center"
-            android:layout_weight="9"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content" />
-
-
-
-
-    </LinearLayout>
-
     <!--第三部分-->
     <cn.edu.swufe.dice_of_coc.MyScrollView
         android:id="@+id/skill_list_scrolview"

@@ -1,25 +1,27 @@
 package cn.edu.swufe.dice_of_coc;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.LoginFilter;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -44,16 +46,30 @@ public class BuildCardActivity extends AppCompatActivity {
             tv_INT_half,tv_INT_fif,
             tv_POW_half,tv_POW_fif,
             tv_EDU_half,tv_EDU_fif;
-    private EditText ed_AGE ;
+    private EditText ed_AGE,ed_NAME,ed_XINGBIE,ed_ZHUDI,ed_guxiang;
 
     public int STR=0,CON=0,SIZ=0,DEX=0,APP=0,INT=0,POW=0,EDU=0,Lucky=0;
 
-    private Button bt_Restart,bt_Qued;
+    private LinearLayout buttonlayout ;
+    private LinearLayout mainAt ;
+    private LinearLayout biao2_3;
+    private LinearLayout layout_qued1;
+    private Spinner spinner;
+
+    private Button bt_Restart,bt_Qued,bt_Qued1;
+
+    Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_build_card);
+
+        buttonlayout = findViewById(R.id.build_button_layout);
+        layout_qued1= findViewById(R.id.layout_qued1);
+        mainAt = findViewById(R.id.layout_main_Attributes);
+        biao2_3 = findViewById(R.id.table_2_3);
+        spinner = findViewById(R.id.build_spinner_shidai);
 
 
 
@@ -77,16 +93,53 @@ public class BuildCardActivity extends AppCompatActivity {
         writeDataToSQLite(cellDataContainerList);
         writeDataToSQLite2(cellDataContainerList2);
 
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.times,android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setPrompt("选择");
 
-        intiFirst();
+        Thread thread=new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                intiFirst();
+
+            }
+        });
+        thread.start();
         intiSecond();
         intiThird();
-        return;
+
+        handler=new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                if(msg.what==2){
+                    mainAt.setVisibility(View.VISIBLE);
+                    buttonlayout.setVisibility(View.GONE);
+                    ed_AGE.setEnabled(false);
+                    Log.i("handleMessage", " msg.what="+msg.what);
+                }else if (msg.what==1){
+                    spinner.setEnabled(false);
+                    ed_NAME.setEnabled(false);
+                    ed_XINGBIE.setEnabled(false);
+                    ed_ZHUDI.setEnabled(false);
+                    ed_guxiang.setEnabled(false);
+                    layout_qued1.setVisibility(View.GONE);
+                }else if(msg.what==3){
+                    biao2_3.setVisibility(View.VISIBLE);}
+                super.handleMessage(msg);
+            }
+        };
+
     }
 
 
 
-    private void intiFirst() {
+    private void intiFirst(){
         tv_STR=findViewById(R.id.build_STR);
         tv_CON=findViewById(R.id.build_CON);
         tv_SIZ=findViewById(R.id.build_SIZ);
@@ -98,6 +151,10 @@ public class BuildCardActivity extends AppCompatActivity {
         tv_Lucky=findViewById(R.id.build_LUCKY);
 
         ed_AGE=findViewById(R.id.build_AGE);
+        ed_NAME=findViewById(R.id.build_Name);
+        ed_XINGBIE=findViewById(R.id.build_xingbie);
+        ed_ZHUDI =findViewById(R.id.build_zhudi);
+        ed_guxiang=findViewById(R.id.build_guxiang);;
 
         tv_STR_half=findViewById(R.id.build_STR_half);tv_STR_fif=findViewById(R.id.build_STR_fif);
         tv_CON_half=findViewById(R.id.build_CON_half);tv_CON_fif=findViewById(R.id.build_CON_fif);
@@ -110,7 +167,33 @@ public class BuildCardActivity extends AppCompatActivity {
 
         bt_Restart=findViewById(R.id.build_button_restart);
         bt_Qued=findViewById(R.id.build_button_qued);
+        bt_Qued1=findViewById(R.id.button_qued1);
 
+        bt_Qued1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder=new AlertDialog.Builder(BuildCardActivity.this);
+                builder.setTitle("提示");
+                builder.setMessage("确定之后数据无法修改");
+                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {  //确定按钮
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        Message msg = new Message();
+                        msg.what = 1;
+                        Log.i("OnClick", "bt_Qued1.setOnClickListener msg.what" + msg.what);
+                        handler.sendMessage(msg);
+                    }
+                });
+                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {  //取消按钮
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+
+                    }
+                });
+                AlertDialog b=builder.create();
+                b.show();
+            }
+        });
         ed_AGE.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -135,7 +218,7 @@ public class BuildCardActivity extends AppCompatActivity {
                         Toast.makeText(BuildCardActivity.this,"建议年龄不能小于15", Toast.LENGTH_SHORT).show();
                     }else if (value>90){
                         ed_AGE.setText("90");
-                       //Toast.makeText(BuildCardActivity.this,"建议年龄不能大于90", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BuildCardActivity.this,"建议年龄不能大于90", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -190,306 +273,312 @@ public class BuildCardActivity extends AppCompatActivity {
         bt_Qued.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!ed_AGE.getText().equals("")){
-
-                    LinearLayout buttonlayout = findViewById(R.id.build_button_layout);
-                    LinearLayout mainAt = findViewById(R.id.layout_main_Attributes);
-                    TextView tv_DB,tv_TX,tv_SAN,tv_MOV;
-                    tv_DB=findViewById(R.id.text_DB);
-                    tv_TX=findViewById(R.id.text_TX);
-                    tv_SAN=findViewById(R.id.text_SAN);
-                    tv_MOV=findViewById(R.id.text_MOV);
-                    int MOV = 0;
-                    if (DEX<SIZ&&STR<SIZ){
-                        MOV=7;
-                    }else if (DEX<=SIZ||STR<=SIZ){
-                        MOV=8;
-                    }else if (DEX>SIZ||STR>SIZ){
-                        MOV=9;
+                AlertDialog.Builder builder=new AlertDialog.Builder(BuildCardActivity.this);
+                builder.setTitle("提示");
+                builder.setMessage("确定之后数据无法修改");
+                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {  //确定按钮
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        run();
                     }
-
-                    mainAt.setVisibility(View.VISIBLE);
-                    buttonlayout.setVisibility(View.GONE);
-
-
-                    int value=0;
-                    value = Integer.parseInt(ed_AGE.getText().toString());
-    //                    15-19 岁：力量和体型各减５点。教育减５点。决
-    //                    定幸运值时可以骰２次并取较好的一次。
-    //                    20-39 岁：对教育进行１次成长检定。
-    //                    40-49 岁：对教育进行２次成长检定。力量体质
-    //                    敏捷合计减少５点。外貌减５点。
-    //                    50-59 岁：对教育进行３次成长检定。力量体质敏
-    //                    捷合计减少１０点。外貌减１０点。
-    //                    60-69 岁：对教育进行４次成长检定。力量体质敏
-    //                    捷合计减少２０点。外貌减１５点。
-    //                    70-79 岁：对教育进行４次成长检定。力量体质敏
-    //                    捷合计减少４０点。外貌减２０点。
-    //                    80-89 岁：对教育进行４次成长检定。力量体质敏
-    //                    捷合计减少８０点。外貌减２５点。
-                    if (15<=value&&value<=19){
-                        STR=STR-5;
-                        SIZ=SIZ-5;
-                        EDU=EDU-5;
-                        if (((int)(Math.random()*100)+1)>EDU) {
-                            int eduint=(int) (Math.random() * 10) + 1;
-                            EDU = EDU + eduint;
-                            Toast.makeText(BuildCardActivity.this,"教育检定成功，EDU+"+eduint, Toast.LENGTH_SHORT).show();
-                        }else{
-                            Toast.makeText(BuildCardActivity.this,"教育检定失败", Toast.LENGTH_SHORT).show();
-                        }
-
-                        tv_STR.setText(STR+"");
-                        tv_SIZ.setText(SIZ+"");
-                        tv_EDU.setText(EDU+"");
-
-
-                        tv_STR_half.setText(STR/2+"");
-                        tv_STR_fif.setText(STR/5+"");
-                        tv_SIZ_half.setText(SIZ/2+"");
-                        tv_SIZ_fif.setText(SIZ/5+"");
-                        tv_EDU_half.setText(EDU/2+"");
-                        tv_EDU_fif.setText(EDU/5+"");
-
-
-                    }else if (20<=value&&value<=39){
-                        if (((int)(Math.random()*100)+1)>EDU) {
-                            int eduint=(int) (Math.random() * 10) + 1;
-                            EDU = EDU + eduint;
-                            if(EDU>99){
-                                EDU=99;
-                            }
-                            Toast.makeText(BuildCardActivity.this,"教育检定成功，EDU+"+eduint, Toast.LENGTH_SHORT).show();
-
-                        }else{
-                            Toast.makeText(BuildCardActivity.this,"教育检定失败", Toast.LENGTH_SHORT).show();
-                        }
-                        tv_EDU.setText(EDU+"");
-                        tv_EDU_half.setText(EDU/2+"");
-                        tv_EDU_fif.setText(EDU/5+"");
-
-                    }else if(40<=value&&value<=49){
-
-                        for(int i=1;i<3;i++){
-                            if (((int)(Math.random()*100)+1)>EDU) {
-                                int eduint=(int) (Math.random() * 10) + 1;
-                                EDU = EDU + eduint;
-                                if(EDU>99){
-                                    EDU=99;
-                                }
-                            }
-                            while (i==2){
-                                Toast.makeText(BuildCardActivity.this,"教育检定结束(暗骰)", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                        STR=STR-2;
-                        CON=CON-2;
-                        DEX=DEX-1;
-                        MOV=MOV-1;
-
-
-                        tv_STR.setText(STR+"");
-                        tv_CON.setText(CON+"");
-                        tv_DEX.setText(DEX+"");
-
-                        tv_STR_half.setText(STR/2+"");
-                        tv_STR_fif.setText(STR/5+"");
-                        tv_CON_half.setText(CON/2+"");
-                        tv_CON_fif.setText(CON/5+"");
-                        tv_DEX_half.setText(DEX/2+"");
-                        tv_DEX_fif.setText(DEX/5+"");
-
-                        tv_EDU.setText(EDU+"");
-                        tv_EDU_half.setText(EDU/2+"");
-                        tv_EDU_fif.setText(EDU/5+"");
-
-
-
-                    }else if(50<=value&&value<=59){
-                        for(int i=1;i<4;i++){
-                            if (((int)(Math.random()*100)+1)>EDU) {
-                                int eduint=(int) (Math.random() * 10) + 1;
-                                EDU = EDU + eduint;
-                                if(EDU>99){
-                                    EDU=99;
-                                }
-                            }
-                            while (i==3){
-                                Toast.makeText(BuildCardActivity.this,"教育检定结束(暗骰)", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                        STR=STR-3;
-                        CON=CON-3;
-                        DEX=DEX-4;
-                        MOV=MOV-2;
-
-
-                        tv_STR.setText(STR+"");
-                        tv_CON.setText(CON+"");
-                        tv_DEX.setText(DEX+"");
-
-                        tv_STR_half.setText(STR/2+"");
-                        tv_STR_fif.setText(STR/5+"");
-                        tv_CON_half.setText(CON/2+"");
-                        tv_CON_fif.setText(CON/5+"");
-                        tv_DEX_half.setText(DEX/2+"");
-                        tv_DEX_fif.setText(DEX/5+"");
-
-                        tv_EDU.setText(EDU+"");
-                        tv_EDU_half.setText(EDU/2+"");
-                        tv_EDU_fif.setText(EDU/5+"");
-
-                    }else if(60<=value&&value<=69){
-                        for(int i=1;i<5;i++){
-                            if (((int)(Math.random()*100)+1)>EDU) {
-                                int eduint=(int) (Math.random() * 10) + 1;
-                                EDU = EDU + eduint;
-                                if(EDU>99){
-                                    EDU=99;
-                                }
-                            }
-                            while (i==5){
-                                Toast.makeText(BuildCardActivity.this,"教育检定结束(暗骰)", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                        STR=STR-7;
-                        CON=CON-7;
-                        DEX=DEX-6;
-                        MOV=MOV-3;
-
-
-                        tv_STR.setText(STR+"");
-                        tv_CON.setText(CON+"");
-                        tv_DEX.setText(DEX+"");
-
-                        tv_STR_half.setText(STR/2+"");
-                        tv_STR_fif.setText(STR/5+"");
-                        tv_CON_half.setText(CON/2+"");
-                        tv_CON_fif.setText(CON/5+"");
-                        tv_DEX_half.setText(DEX/2+"");
-                        tv_DEX_fif.setText(DEX/5+"");
-
-                        tv_EDU.setText(EDU+"");
-                        tv_EDU_half.setText(EDU/2+"");
-                        tv_EDU_fif.setText(EDU/5+"");
-
-                    }else if(70<=value&&value<=79){
-                        for(int i=1;i<5;i++){
-                            if (((int)(Math.random()*100)+1)>EDU) {
-                                int eduint=(int) (Math.random() * 10) + 1;
-                                EDU = EDU + eduint;
-                                if(EDU>99){
-                                    EDU=99;
-                                }
-                            }
-                            while (i==5){
-                                Toast.makeText(BuildCardActivity.this,"教育检定结束(暗骰)", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                        STR=STR-13;
-                        CON=CON-13;
-                        DEX=DEX-14;
-                        MOV=MOV-4;
-
-
-                        tv_STR.setText(STR+"");
-                        tv_CON.setText(CON+"");
-                        tv_DEX.setText(DEX+"");
-
-                        tv_STR_half.setText(STR/2+"");
-                        tv_STR_fif.setText(STR/5+"");
-                        tv_CON_half.setText(CON/2+"");
-                        tv_CON_fif.setText(CON/5+"");
-                        tv_DEX_half.setText(DEX/2+"");
-                        tv_DEX_fif.setText(DEX/5+"");
-
-                        tv_EDU.setText(EDU+"");
-                        tv_EDU_half.setText(EDU/2+"");
-                        tv_EDU_fif.setText(EDU/5+"");
-
-                    }else if(80<=value&&value<=89){
-                        for(int i=1;i<5;i++){
-                            if (((int)(Math.random()*100)+1)>EDU) {
-                                int eduint=(int) (Math.random() * 10) + 1;
-                                EDU = EDU + eduint;
-                                if(EDU>99){
-                                    EDU=99;
-                                }
-                            }
-                            while (i==5){
-                                Toast.makeText(BuildCardActivity.this,"教育检定结束(暗骰)", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                        STR=STR-27;
-                        CON=CON-27;
-                        DEX=DEX-26;
-                        MOV=MOV-5;
-
-
-                        tv_STR.setText(STR+"");
-                        tv_CON.setText(CON+"");
-                        tv_DEX.setText(DEX+"");
-
-                        tv_STR_half.setText(STR/2+"");
-                        tv_STR_fif.setText(STR/5+"");
-                        tv_CON_half.setText(CON/2+"");
-                        tv_CON_fif.setText(CON/5+"");
-                        tv_DEX_half.setText(DEX/2+"");
-                        tv_DEX_fif.setText(DEX/5+"");
-
-                        tv_EDU.setText(EDU+"");
-                        tv_EDU_half.setText(EDU/2+"");
-                        tv_EDU_fif.setText(EDU/5+"");
-
+                });
+                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {  //取消按钮
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
                     }
-
-                    ed_AGE.setEnabled(false);
-                    int db=STR+SIZ;
-                    if(db>=2&&db<=64){
-                        tv_DB.setText(""+"-2");
-                        tv_TX.setText(""+"-2");
-                    }else if (db>=65&&db<=84){
-                        tv_DB.setText(""+"-1");
-                        tv_TX.setText(""+"-1");
-                    }else if (db>=85&&db<=124){
-                        tv_DB.setText(""+"0");
-                        tv_TX.setText(""+"0");
-                    }else if (db>=125&&db<=164){
-                        tv_DB.setText(""+"+1d4");
-                        tv_TX.setText(""+"1");
-                    }else if (db>=165&&db<=204){
-                        tv_DB.setText(""+"+1d6");
-                        tv_TX.setText(""+"2");
-                    }else if (db>=205&&db<=284){
-                        tv_DB.setText(""+"+2d6");
-                        tv_TX.setText(""+"3");
-                    }else if (db>=285&&db<=364){
-                        tv_DB.setText(""+"+3d6");
-                        tv_TX.setText(""+"4");
-                    }else if (db>=365&&db<=444){
-                        tv_DB.setText(""+"+4d6");
-                        tv_TX.setText(""+"5");
-                    }else if (db>=445&&db<=524){
-                        tv_DB.setText(""+"+5d6");
-                        tv_TX.setText(""+"6");
-                    }
-                    tv_SAN.setText(""+INT);
-
-                    tv_MOV.setText(""+MOV);
-                }else {
-                    Toast.makeText(BuildCardActivity.this,"年龄不能为空", Toast.LENGTH_SHORT).show();
-                }
-
+                });
+                AlertDialog b=builder.create();
+                b.show();
 
             }
         });
 
+    }
+
+    public void run() {
+        String s = ed_AGE.getText().toString().trim();
+        if (!s.equals("")) {
+
+//                            LinearLayout buttonlayout = findViewById(R.id.build_button_layout);
+//                            LinearLayout mainAt = findViewById(R.id.layout_main_Attributes);
+//                            LinearLayout biao2_3 = findViewById(R.id.table_2_3);
+            TextView tv_DB, tv_TX, tv_SAN, tv_MOV;
+            tv_DB = findViewById(R.id.text_DB);
+            tv_TX = findViewById(R.id.text_TX);
+            tv_SAN = findViewById(R.id.text_SAN);
+            tv_MOV = findViewById(R.id.text_MOV);
+
+            int MOV = 0;
+            if (DEX < SIZ && STR < SIZ) {
+                MOV = 7;
+            } else if (DEX <= SIZ || STR <= SIZ) {
+                MOV = 8;
+            } else if (DEX > SIZ || STR > SIZ) {
+                MOV = 9;
+            }
+
+//                            mainAt.setVisibility(View.VISIBLE);
+//                            buttonlayout.setVisibility(View.GONE);
+//                            biao2_3.setVisibility(View.VISIBLE);
+
+            int value = 0;
+            value = Integer.parseInt(ed_AGE.getText().toString());
+            int a = 0;
+
+            if (15 <= value && value <= 19) {
+                a = 1;
+            } else if (20 <= value && value <= 39) {
+                a = 2;
+            } else if (40 <= value && value <= 49) {
+                a = 3;
+            } else if (50 <= value && value <= 59) {
+                a = 4;
+            } else if (60 <= value && value <= 69) {
+                a = 5;
+            } else if (70 <= value && value <= 79) {
+                a = 6;
+            } else if (80 <= value && value <= 89) {
+                a = 7;
+            }
+
+            switch (a) {
+                case 1:
+                    STR = STR - 5;
+                    SIZ = SIZ - 5;
+                    EDU = EDU - 5;
+                    if (((int) (Math.random() * 100) + 1) > EDU) {
+                        int eduint = (int) (Math.random() * 10) + 1;
+                        EDU = EDU + eduint;
+                        Looper.prepare();
+                        Toast.makeText(BuildCardActivity.this, "教育检定成功，EDU+" + eduint, Toast.LENGTH_SHORT).show();
+
+                    } else {
+
+                        Toast.makeText(BuildCardActivity.this, "教育检定失败", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                    tv_STR.setText(STR + "");
+                    tv_SIZ.setText(SIZ + "");
+                    tv_EDU.setText(EDU + "");
 
 
+                    tv_STR_half.setText(STR / 2 + "");
+                    tv_STR_fif.setText(STR / 5 + "");
+                    tv_SIZ_half.setText(SIZ / 2 + "");
+                    tv_SIZ_fif.setText(SIZ / 5 + "");
+                    tv_EDU_half.setText(EDU / 2 + "");
+                    tv_EDU_fif.setText(EDU / 5 + "");
+                    break;
+                case 2:
+                    if (((int) (Math.random() * 100) + 1) > EDU) {
+                        int eduint = (int) (Math.random() * 10) + 1;
+                        EDU = EDU + eduint;
+                        if (EDU > 99) {
+                            EDU = 99;
+                        }
+
+                        Toast.makeText(BuildCardActivity.this, "教育检定成功，EDU+" + eduint, Toast.LENGTH_SHORT).show();
+
+                    } else {
+
+                        Toast.makeText(BuildCardActivity.this, "教育检定失败", Toast.LENGTH_SHORT).show();
+
+                    }
+                    tv_EDU.setText(EDU + "");
+                    tv_EDU_half.setText(EDU / 2 + "");
+                    tv_EDU_fif.setText(EDU / 5 + "");
+                    break;
+                case 3:
+                    for (int i = 1; i < 3; i++) {
+                        int eduint = (int) (Math.random() * 10) + 1;
+                        if ( eduint> EDU) {
+                            EDU = EDU + eduint;
+                            if (EDU > 99) {
+                                EDU = 99;
+                            }
+                        }while (i == 2) {
+
+                            Toast.makeText(BuildCardActivity.this, "教育加值检定结束(暗骰)", Toast.LENGTH_SHORT).show();
+                            break;
+                        }
+                    }
+
+                    STR = STR - 2;
+                    CON = CON - 2;
+                    DEX = DEX - 1;
+                    MOV = MOV - 1;
+
+
+                    setTV();
+                    break;
+
+                case 4:
+                    for (int i = 1; i < 4; i++) {
+                        int eduint = (int) (Math.random() * 10) + 1;
+                        if ( eduint> EDU&&EDU + eduint< 99) {
+                            EDU = EDU + eduint;
+                        }
+                        while (i == 3) {
+                            Toast.makeText(BuildCardActivity.this, "教育加值检定结束(暗骰)", Toast.LENGTH_SHORT).show();
+                            break;
+                        }
+                    }
+
+                    STR = STR - 3;
+                    CON = CON - 3;
+                    DEX = DEX - 4;
+                    MOV = MOV - 2;
+
+
+                    setTV();
+                    break;
+
+                case 5:
+                    for (int i = 1; i < 5; i++) {
+                        int eduint = (int) (Math.random() * 10) + 1;
+                        if (  eduint> EDU&&EDU + eduint< 99) {
+                            EDU = EDU + eduint;
+                        }
+                        while (i == 4) {
+
+                            Toast.makeText(BuildCardActivity.this, "教育检定结束(暗骰)", Toast.LENGTH_SHORT).show();
+                            break;
+                        }
+                    }
+                    STR = STR - 7;
+                    CON = CON - 7;
+                    DEX = DEX - 6;
+                    MOV = MOV - 3;
+
+                    setTV();
+                    break;
+                case 6:
+                    for (int i = 1; i < 5; i++) {
+                        int eduint = (int) (Math.random() * 10) + 1;
+                        if (  eduint> EDU&&EDU + eduint< 99) {
+                            EDU = EDU + eduint;
+
+                        }
+                        while (i == 4) {
+
+                            Toast.makeText(BuildCardActivity.this, "教育检定结束(暗骰)", Toast.LENGTH_SHORT).show();
+                            break;
+                        }
+                    }
+
+                    STR = STR - 13;
+                    CON = CON - 13;
+                    DEX = DEX - 14;
+                    MOV = MOV - 4;
+
+
+                    setTV();
+                    break;
+                case 7:
+                    for (int i = 1; i < 5; i++) {
+                        int eduint = (int) (Math.random() * 10) + 1;
+                        if (  eduint> EDU&&EDU + eduint< 99) {
+                            EDU = EDU + eduint;
+
+                        }
+                        while (i == 4) {
+                            Toast.makeText(BuildCardActivity.this, "教育检定结束(暗骰)", Toast.LENGTH_SHORT).show();
+                            break;
+                        }
+                    }
+
+                    STR = STR - 27;
+                    CON = CON - 27;
+                    DEX = DEX - 26;
+                    MOV = MOV - 5;
+
+
+                    setTV();
+                    break;
+            }
+            //                    15-19 岁：力量和体型各减５点。教育减５点。决
+            //                    定幸运值时可以骰２次并取较好的一次。
+            //                    20-39 岁：对教育进行１次成长检定。
+            //                    40-49 岁：对教育进行２次成长检定。力量体质
+            //                    敏捷合计减少５点。外貌减５点。
+            //                    50-59 岁：对教育进行３次成长检定。力量体质敏
+            //                    捷合计减少１０点。外貌减１０点。
+            //                    60-69 岁：对教育进行４次成长检定。力量体质敏
+            //                    捷合计减少２０点。外貌减１５点。
+            //                    70-79 岁：对教育进行４次成长检定。力量体质敏
+            //                    捷合计减少４０点。外貌减２０点。
+            //                    80-89 岁：对教育进行４次成长检定。力量体质敏
+            //                    捷合计减少８０点。外貌减２５点。
+
+            //ed_AGE.setEnabled(false);
+
+            int db = STR + SIZ;
+            if (db >= 2 && db <= 64) {
+                tv_DB.setText("" + "-2");
+                tv_TX.setText("" + "-2");
+            } else if (db >= 65 && db <= 84) {
+                tv_DB.setText("" + "-1");
+                tv_TX.setText("" + "-1");
+            } else if (db >= 85 && db <= 124) {
+                tv_DB.setText("" + "0");
+                tv_TX.setText("" + "0");
+            } else if (db >= 125 && db <= 164) {
+                tv_DB.setText("" + "+1d4");
+                tv_TX.setText("" + "1");
+            } else if (db >= 165 && db <= 204) {
+                tv_DB.setText("" + "+1d6");
+                tv_TX.setText("" + "2");
+            } else if (db >= 205 && db <= 284) {
+                tv_DB.setText("" + "+2d6");
+                tv_TX.setText("" + "3");
+            } else if (db >= 285 && db <= 364) {
+                tv_DB.setText("" + "+3d6");
+                tv_TX.setText("" + "4");
+            } else if (db >= 365 && db <= 444) {
+                tv_DB.setText("" + "+4d6");
+                tv_TX.setText("" + "5");
+            } else if (db >= 445 && db <= 524) {
+                tv_DB.setText("" + "+5d6");
+                tv_TX.setText("" + "6");
+            }
+
+            Log.i("run", "run: db==" + db);
+
+            tv_SAN.setText("" + INT);
+
+            tv_MOV.setText("" + MOV);
+
+            //处理完成后给handler发送消息  
+            Message msg = new Message();
+            msg.what = 2;
+            Log.i("run", "run: msg.what" + msg.what);
+            handler.sendMessage(msg);
+
+
+
+        } else {
+
+            Toast.makeText(BuildCardActivity.this, "年龄不能为空", Toast.LENGTH_SHORT).show();
+
+        }
+    }
+
+    private void setTV() {
+        tv_STR.setText(STR + "");
+        tv_CON.setText(CON + "");
+        tv_DEX.setText(DEX + "");
+
+        tv_STR_half.setText(STR / 2 + "");
+        tv_STR_fif.setText(STR / 5 + "");
+        tv_CON_half.setText(CON / 2 + "");
+        tv_CON_fif.setText(CON / 5 + "");
+        tv_DEX_half.setText(DEX / 2 + "");
+        tv_DEX_fif.setText(DEX / 5 + "");
+
+        tv_EDU.setText(EDU + "");
+        tv_EDU_half.setText(EDU / 2 + "");
+        tv_EDU_fif.setText(EDU / 5 + "");
     }
 
     private void intiSecond() {
@@ -569,10 +658,16 @@ public class BuildCardActivity extends AppCompatActivity {
                     myView2.setVisibility(View.VISIBLE);
                     textView1.setVisibility(View.VISIBLE);
 
+                    Message msg = new Message();
+                    msg.what = 3;
+                    Log.i("OnClick", "list.setOnClickListener msg.what" + msg.what);
+                    handler.sendMessage(msg);
+
                 }
             });
         }
         Log.i("intiSecond", "careerlist----->"+careerlist);
+
     }
 
     private void intiThird() {
@@ -604,176 +699,163 @@ public class BuildCardActivity extends AppCompatActivity {
             //按照参数设置点击事件响应
             final List<View> finalList2 = List1;
             final int final2 = i;
-            List1.get(i).setOnClickListener(new View.OnClickListener() {
+
+            //获得控件
+            final TextView textView = finalList2.get(final2).findViewById(R.id.skill_point);
+            final TextView textView_half = finalList2.get(final2).findViewById(R.id.build_skill_half);
+            final TextView textView_fif = finalList2.get(final2).findViewById(R.id.build_skill_fif);
+
+            final TextView textView11 = findViewById(R.id.build_own_point);
+            final TextView textView12 = findViewById(R.id.build_like_point);
+
+            RelativeLayout Add=finalList2.get(final2).findViewById(R.id.button_add);
+            RelativeLayout Remove=finalList2.get(final2).findViewById(R.id.button_remove);
+
+            final CheckBox checkBox = finalList2.get(final2).findViewById(R.id.checkBox);
+
+
+            final int tv=0;
+
+
+            //点击加减号，兴趣点，技能总点反应
+
+            Add.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //获得控件
-                    final TextView textView = finalList2.get(final2).findViewById(R.id.skill_point);
-                    final TextView textView_half = finalList2.get(final2).findViewById(R.id.build_skill_half);
-                    final TextView textView_fif = finalList2.get(final2).findViewById(R.id.build_skill_fif);
-
-                    final TextView textView11 = findViewById(R.id.build_own_point);
-                    final TextView textView12 = findViewById(R.id.build_like_point);
-
-                    RelativeLayout Add=finalList2.get(final2).findViewById(R.id.button_add);
-                    RelativeLayout Remove=finalList2.get(final2).findViewById(R.id.button_remove);
-
-                    CheckBox checkBox = finalList2.get(final2).findViewById(R.id.checkBox);
-
-
-                    final int tv=0;
-
-
-
-                    //点击加减号，兴趣点，技能总点反应
                     if (!checkBox.isChecked()){
-                        Add.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if ((int) Math.floor(Float.parseFloat(textView.getText().toString()))<100&&Integer.parseInt(textView12.getText().toString())>0) {
-                                    textView12.setText("" + (Integer.parseInt(textView12.getText().toString())-1));
-                                    textView.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) +1));
+                        if ((int) Math.floor(Float.parseFloat(textView.getText().toString()))<100&&Integer.parseInt(textView12.getText().toString())>0) {
 
-                                    textView_fif.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) +1)/5);
-                                    textView_half.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) +1)/2);
+                            textView12.setText("" + (Integer.parseInt(textView12.getText().toString())-1));
+                            textView.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) +1));
 
-                                }else if((int) Math.floor(Float.parseFloat(textView.getText().toString()))>=100){
-                                    textView.setText(""+99);
-                                    textView_fif.setText("" + 99/5);
-                                    textView_half.setText("" + 99/2);
-                                }else if(Integer.parseInt(textView12.getText().toString())<=0){ }
-                            }
-                        });
-                        Add.setOnLongClickListener(new View.OnLongClickListener() {
-                            @Override
-                            public boolean onLongClick(View v) {
-                                if ((int) Math.floor(Float.parseFloat(textView.getText().toString()))<100&&Integer.parseInt(textView12.getText().toString())>0) {
-                                    textView12.setText("" + (Integer.parseInt(textView12.getText().toString())-10));
-                                    textView.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) +10));
+                            textView_fif.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) +1)/5);
+                            textView_half.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) +1)/2);
 
-                                    textView_fif.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) +10)/5);
-                                    textView_half.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) +10)/2);
+                        }else if((int) Math.floor(Float.parseFloat(textView.getText().toString()))>=100){
+                            textView.setText(""+99);
+                            textView_fif.setText("" + 99/5);
+                            textView_half.setText("" + 99/2);
+                        }else if(Integer.parseInt(textView12.getText().toString())<=0){ }
+                    }else if (checkBox.isChecked()){
+                        if ((int) Math.floor(Float.parseFloat(textView.getText().toString()))<100&&Integer.parseInt(textView11.getText().toString())>=0) {
+                            textView11.setText("" + (Integer.parseInt(textView11.getText().toString())-1));
+                            textView.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) +1));
 
-                                }else if((int) Math.floor(Float.parseFloat(textView.getText().toString()))>=100){
-                                    textView.setText(""+99);
-                                    textView_fif.setText("" + 99/5);
-                                    textView_half.setText("" + 99/2);
-                                }else if(Integer.parseInt(textView12.getText().toString())<=0){ }
-                                return true;
-                            }
+                            textView_fif.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) +1)/5);
+                            textView_half.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) +1)/2);
 
-                        });
-                        Remove.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Log.i("onClick", "onClick:   tv =  "+tv);
-                                if ((int) Math.floor(Float.parseFloat(textView.getText().toString()))>tv) {
-                                    textView12.setText("" + (Integer.parseInt(textView12.getText().toString())+1));
-                                    textView.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString()))-1));
+                        }else if((int) Math.floor(Float.parseFloat(textView.getText().toString()))>=100){
+                            textView.setText(""+99);
+                            textView_fif.setText("" + 99/5);
+                            textView_half.setText("" + 99/2);
+                        }else if(Integer.parseInt(textView11.getText().toString())<0){ }
+                    }
+                }
+            });
 
-                                    textView_fif.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString()))-1)/5);
-                                    textView_half.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString()))-1)/2);
-                                }else if((int) Math.floor(Float.parseFloat(textView.getText().toString()))<=tv){
-                                    textView.setText(""+tv);
-                                }else if(Integer.parseInt(textView12.getText().toString())<0){ }
-                            }
-                        });
-                        Remove.setOnLongClickListener(new View.OnLongClickListener() {
-                            @Override
-                            public boolean onLongClick(View v) {
-                                if ((int) Math.floor(Float.parseFloat(textView.getText().toString()))<100&&Integer.parseInt(textView12.getText().toString())>0) {
-                                    textView12.setText("" + (Integer.parseInt(textView12.getText().toString())+10));
-                                    textView.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) -10));
+            Add.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if (!checkBox.isChecked()){
+                        if ((int) Math.floor(Float.parseFloat(textView.getText().toString())) < 100 && Integer.parseInt(textView12.getText().toString()) > 0) {
+                            textView12.setText("" + (Integer.parseInt(textView12.getText().toString()) - 10));
+                            textView.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) + 10));
 
-                                    textView_fif.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) -10)/5);
-                                    textView_half.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) +10)/2);
+                            textView_fif.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) + 10) / 5);
+                            textView_half.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) + 10) / 2);
 
-                                }else if((int) Math.floor(Float.parseFloat(textView.getText().toString()))>=100){
-                                    textView.setText(""+99);
-                                    textView_fif.setText("" + 99/5);
-                                    textView_half.setText("" + 99/2);
-                                }else if(Integer.parseInt(textView12.getText().toString())<=0){ }
-                                return true;
-                            }
-                        });
-                    }else {//勾选之后点击加减号，本职技能点，技能总点反应
-                        Add.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if ((int) Math.floor(Float.parseFloat(textView.getText().toString()))<100&&Integer.parseInt(textView11.getText().toString())>=0) {
-                                    textView11.setText("" + (Integer.parseInt(textView11.getText().toString())-1));
-                                    textView.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) +1));
+                        } else if ((int) Math.floor(Float.parseFloat(textView.getText().toString())) >= 100) {
+                            textView.setText("" + 99);
+                            textView_fif.setText("" + 99 / 5);
+                            textView_half.setText("" + 99 / 2);
+                        } else if (Integer.parseInt(textView12.getText().toString()) <= 0) {
+                        }
 
-                                    textView_fif.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) +1)/5);
-                                    textView_half.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) +1)/2);
+                    }else if(checkBox.isChecked()){
+                        if ((int) Math.floor(Float.parseFloat(textView.getText().toString()))<100&&Integer.parseInt(textView11.getText().toString())>0) {
+                            textView11.setText("" + (Integer.parseInt(textView11.getText().toString())-10));
+                            textView.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) +10));
 
-                                }else if((int) Math.floor(Float.parseFloat(textView.getText().toString()))>=100){
-                                    textView.setText(""+99);
-                                    textView_fif.setText("" + 99/5);
-                                    textView_half.setText("" + 99/2);
-                                }else if(Integer.parseInt(textView11.getText().toString())<0){ }
-                            }
-                        });
+                            textView_fif.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) +10)/5);
+                            textView_half.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) +10)/2);
 
-                        Add.setOnLongClickListener(new View.OnLongClickListener() {
-                            @Override
-                            public boolean onLongClick(View v) {
-                                if ((int) Math.floor(Float.parseFloat(textView.getText().toString()))<100&&Integer.parseInt(textView11.getText().toString())>0) {
-                                    textView11.setText("" + (Integer.parseInt(textView11.getText().toString())-10));
-                                    textView.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) +10));
-
-                                    textView_fif.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) +10)/5);
-                                    textView_half.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) +10)/2);
-
-                                }else if((int) Math.floor(Float.parseFloat(textView.getText().toString()))>=100){
-                                    textView.setText(""+99);
-                                    textView_fif.setText("" + 99/5);
-                                    textView_half.setText("" + 99/2);
-                                }else if(Integer.parseInt(textView11.getText().toString())<=0){ }
-                                return true;
-                            }
-
-                        });
-                        Remove.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if ((int) Math.floor(Float.parseFloat(textView.getText().toString()))>tv) {
-                                    textView11.setText("" + (Integer.parseInt(textView11.getText().toString())+1));
-                                    textView.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) -1));
-
-                                    textView_fif.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) -1)/5);
-                                    textView_half.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) -1)/2);
-                                }else if((int) Math.floor(Float.parseFloat(textView.getText().toString()))<=tv){
-                                    textView.setText(""+tv);
-                                }else if(Integer.parseInt(textView11.getText().toString())<0){ }
-                            }
-                        });
-                        Remove.setOnLongClickListener(new View.OnLongClickListener() {
-                            @Override
-                            public boolean onLongClick(View v) {
-                                if ((int) Math.floor(Float.parseFloat(textView.getText().toString()))<100&&Integer.parseInt(textView11.getText().toString())>0) {
-                                    textView11.setText("" + (Integer.parseInt(textView11.getText().toString())+10));
-                                    textView.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) -10));
-
-                                    textView_fif.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) -10)/5);
-                                    textView_half.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) +10)/2);
-
-                                }else if((int) Math.floor(Float.parseFloat(textView.getText().toString()))>=100){
-                                    textView.setText(""+99);
-                                    textView_fif.setText("" + 99/5);
-                                    textView_half.setText("" + 99/2);
-                                }else if(Integer.parseInt(textView11.getText().toString())<=0){ }
-                                return true;
-                            }
-                        });
+                        }else if((int) Math.floor(Float.parseFloat(textView.getText().toString()))>=100){
+                            textView.setText(""+99);
+                            textView_fif.setText("" + 99/5);
+                            textView_half.setText("" + 99/2);
+                        }else if(Integer.parseInt(textView11.getText().toString())<=0){ }
 
                     }
+                    return true;
+                }
+            });
+            Remove.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!checkBox.isChecked()){
+                        Log.i("onClick", "onClick:   tv =  " + tv);
+                        if ((int) Math.floor(Float.parseFloat(textView.getText().toString())) > tv) {
+                            textView12.setText("" + (Integer.parseInt(textView12.getText().toString()) + 1));
+                            textView.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) - 1));
 
+                            textView_fif.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) - 1) / 5);
+                            textView_half.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) - 1) / 2);
+                        } else if ((int) Math.floor(Float.parseFloat(textView.getText().toString())) <= tv) {
+                            textView.setText("" + tv);
+                        } else if (Integer.parseInt(textView12.getText().toString()) < 0) {
+                        }
+                }else if (checkBox.isChecked()){
+                        if ((int) Math.floor(Float.parseFloat(textView.getText().toString()))>tv) {
+                            textView11.setText("" + (Integer.parseInt(textView11.getText().toString())+1));
+                            textView.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) -1));
+
+                            textView_fif.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) -1)/5);
+                            textView_half.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) -1)/2);
+                        }else if((int) Math.floor(Float.parseFloat(textView.getText().toString()))<=tv){
+                            textView.setText(""+tv);
+                        }else if(Integer.parseInt(textView11.getText().toString())<0){ }
+                    }
+                }
+            });
+            Remove.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if (!checkBox.isChecked()){
+
+                        if ((int) Math.floor(Float.parseFloat(textView.getText().toString())) < 100 && Integer.parseInt(textView12.getText().toString()) > 0) {
+                            textView12.setText("" + (Integer.parseInt(textView12.getText().toString()) + 10));
+                            textView.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) - 10));
+
+                            textView_fif.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) - 10) / 5);
+                            textView_half.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) + 10) / 2);
+
+                        } else if ((int) Math.floor(Float.parseFloat(textView.getText().toString())) >= 100) {
+                            textView.setText("" + 99);
+                            textView_fif.setText("" + 99 / 5);
+                            textView_half.setText("" + 99 / 2);
+                        } else if (Integer.parseInt(textView12.getText().toString()) <= 0) {
+                        }
+                    }else if (checkBox.isChecked()){
+                        if ((int) Math.floor(Float.parseFloat(textView.getText().toString()))<100&&Integer.parseInt(textView11.getText().toString())>0) {
+                            textView11.setText("" + (Integer.parseInt(textView11.getText().toString())+10));
+                            textView.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) -10));
+
+                            textView_fif.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) -10)/5);
+                            textView_half.setText("" + ((int) Math.floor(Float.parseFloat(textView.getText().toString())) +10)/2);
+
+                        }else if((int) Math.floor(Float.parseFloat(textView.getText().toString()))>=100){
+                            textView.setText(""+99);
+                            textView_fif.setText("" + 99/5);
+                            textView_half.setText("" + 99/2);
+                        }else if(Integer.parseInt(textView11.getText().toString())<=0){ }
+                    }
+                    return true;
                 }
             });
         }
         Log.i("intiThird", "skilllist----->"+skilllist);
-    }
+        }
+
 
     // 第二阶段，把从Excel报表中读出来的数据导出，写入到SQLite数据库中。
     private void writeDataToSQLite(List<CellDataContainer> cellDataContainer) throws NullPointerException{
@@ -927,5 +1009,44 @@ public class BuildCardActivity extends AppCompatActivity {
 
     }
 
+    //手机返回键弹窗
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case AlertDialog.BUTTON_POSITIVE:// "确认"按钮退出程序
+                        finish();
+                        break;
 
+                    case AlertDialog.BUTTON_NEGATIVE:// "取消"第二个按钮取消对话框
+                        break;
+
+                    default:
+                        break;
+
+                }
+            }
+        };
+        if (keyCode == KeyEvent.KEYCODE_BACK ) {
+            // 创建退出对话框
+            AlertDialog isExit = new AlertDialog.Builder(this).create();
+
+            // 设置对话框标题
+            isExit.setTitle("系统提示");
+
+            // 设置对话框消息
+            isExit.setMessage("确定要退出吗？\n退出数据无法保存");
+
+            // 添加选择按钮并注册监听
+            isExit.setButton("确定", listener);
+            isExit.setButton2("取消", listener);
+
+            // 显示对话框
+            isExit.show();
+
+
+        }
+        return false;
+    }
 }

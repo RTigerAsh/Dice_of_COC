@@ -18,6 +18,7 @@ public class Fragment1 extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.page1, container, false);
 
+
         Button bt = (Button) view.findViewById(R.id.bt);
         ImageView imageView = view.findViewById(R.id.page1_img);
         final DiceDialog diceDialog = new DiceDialog(this.getActivity());

@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         listFragment = new ArrayList<>();
         listFragment.add(new Fragment1());
         listFragment.add(new Fragment2());
-        listFragment.add(new Fragment3());
+        //listFragment.add(new Fragment3());
         listFragment.add(new Fragment4());
         MyFragAdapter myAdapter = new MyFragAdapter(getSupportFragmentManager(), this, listFragment);
         viewPager.setAdapter(myAdapter);
@@ -58,9 +58,9 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.navigation_card:
                         viewPager.setCurrentItem(1);
                         return true;
-                    case R.id.navigation_user:
-                        viewPager.setCurrentItem(2);
-                        return true;
+//                    case R.id.navigation_user:
+//                        viewPager.setCurrentItem(2);
+//                        return true;
                     case R.id.navigation_setting:
                         viewPager.setCurrentItem(3);
                         return true;
