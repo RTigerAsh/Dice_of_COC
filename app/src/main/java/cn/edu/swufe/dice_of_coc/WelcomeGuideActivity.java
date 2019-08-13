@@ -60,8 +60,7 @@ public class WelcomeGuideActivity extends Activity implements View.OnClickListen
         /*初始化adapter*/
         adapter = new GuideViewPagerAdapter(views);
         viewPager.setAdapter(adapter);
-        /*需要设置页面改变的监听器，这样我们能把我页面改变时的具体操作细节，所以
-        需要创建PageChangeListener，实现OnPageChangeListener接口*/
+
         viewPager.addOnPageChangeListener(new PageChangeListener());
         initDots();
     }

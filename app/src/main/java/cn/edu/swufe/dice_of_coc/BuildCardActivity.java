@@ -56,7 +56,7 @@ public class BuildCardActivity extends AppCompatActivity {
     private LinearLayout layout_qued1;
     private Spinner spinner;
 
-    private Button bt_Restart,bt_Qued,bt_Qued1;
+    private Button bt_Restart,bt_Qued,bt_Qued1,bt_FinishBuild;
 
     Handler handler;
 
@@ -113,6 +113,7 @@ public class BuildCardActivity extends AppCompatActivity {
         thread.start();
         intiSecond();
         intiThird();
+        intiFour();
 
         handler=new Handler(){
             @Override
@@ -341,8 +342,9 @@ public class BuildCardActivity extends AppCompatActivity {
                 a = 7;
             }
 
-            switch (a) {
+            switch (a) { //                15-19 岁：力量和体型各减５点。教育减５点。
                 case 1:
+
                     STR = STR - 5;
                     SIZ = SIZ - 5;
                     EDU = EDU - 5;
@@ -370,7 +372,7 @@ public class BuildCardActivity extends AppCompatActivity {
                     tv_EDU_half.setText(EDU / 2 + "");
                     tv_EDU_fif.setText(EDU / 5 + "");
                     break;
-                case 2:
+                case 2://                    20-39 岁：对教育进行１次成长检定。
                     if (((int) (Math.random() * 100) + 1) > EDU) {
                         int eduint = (int) (Math.random() * 10) + 1;
                         EDU = EDU + eduint;
@@ -389,7 +391,8 @@ public class BuildCardActivity extends AppCompatActivity {
                     tv_EDU_half.setText(EDU / 2 + "");
                     tv_EDU_fif.setText(EDU / 5 + "");
                     break;
-                case 3:
+                case 3://                    40-49 岁：对教育进行２次成长检定。力量体质
+                       //                    敏捷合计减少５点。外貌减５点。
                     for (int i = 1; i < 3; i++) {
                         int eduint = (int) (Math.random() * 10) + 1;
                         if ( eduint> EDU) {
@@ -403,17 +406,19 @@ public class BuildCardActivity extends AppCompatActivity {
                             break;
                         }
                     }
+                    int[] j5=RandomT.Randthree(5);
 
-                    STR = STR - 2;
-                    CON = CON - 2;
-                    DEX = DEX - 1;
+                    STR = STR - j5[0];
+                    CON = CON - j5[1];
+                    DEX = DEX - j5[2];
                     MOV = MOV - 1;
 
 
                     setTV();
                     break;
 
-                case 4:
+                case 4: //                    50-59 岁：对教育进行３次成长检定。力量体质敏
+                        //                    捷合计减少１０点。外貌减１０点。
                     for (int i = 1; i < 4; i++) {
                         int eduint = (int) (Math.random() * 10) + 1;
                         if ( eduint> EDU&&EDU + eduint< 99) {
@@ -424,17 +429,19 @@ public class BuildCardActivity extends AppCompatActivity {
                             break;
                         }
                     }
+                    int[] j10=RandomT.Randthree(10);
 
-                    STR = STR - 3;
-                    CON = CON - 3;
-                    DEX = DEX - 4;
+                    STR = STR - j10[0];
+                    CON = CON - j10[1];
+                    DEX = DEX - j10[2];
                     MOV = MOV - 2;
 
 
                     setTV();
                     break;
 
-                case 5:
+                case 5: //                    60-69 岁：对教育进行４次成长检定。力量体质敏
+                        //                    捷合计减少２０点。外貌减１５点。
                     for (int i = 1; i < 5; i++) {
                         int eduint = (int) (Math.random() * 10) + 1;
                         if (  eduint> EDU&&EDU + eduint< 99) {
@@ -446,14 +453,16 @@ public class BuildCardActivity extends AppCompatActivity {
                             break;
                         }
                     }
-                    STR = STR - 7;
-                    CON = CON - 7;
-                    DEX = DEX - 6;
+                    int[] j20=RandomT.Randthree(20);
+                    STR = STR - j20[0];
+                    CON = CON - j20[1];
+                    DEX = DEX - j20[2];
                     MOV = MOV - 3;
 
                     setTV();
                     break;
-                case 6:
+                case 6: //                    70-79 岁：对教育进行４次成长检定。力量体质敏
+                        //                    捷合计减少４０点。外貌减２０点。
                     for (int i = 1; i < 5; i++) {
                         int eduint = (int) (Math.random() * 10) + 1;
                         if (  eduint> EDU&&EDU + eduint< 99) {
@@ -466,16 +475,18 @@ public class BuildCardActivity extends AppCompatActivity {
                             break;
                         }
                     }
+                    int[] j40=RandomT.Randthree(40);
 
-                    STR = STR - 13;
-                    CON = CON - 13;
-                    DEX = DEX - 14;
+                    STR = STR - j40[0];
+                    CON = CON - j40[1];
+                    DEX = DEX - j40[2];
                     MOV = MOV - 4;
 
 
                     setTV();
                     break;
-                case 7:
+                case 7: //                    80-89 岁：对教育进行４次成长检定。力量体质敏
+                        //                    捷合计减少８０点。外貌减２５点。
                     for (int i = 1; i < 5; i++) {
                         int eduint = (int) (Math.random() * 10) + 1;
                         if (  eduint> EDU&&EDU + eduint< 99) {
@@ -487,10 +498,11 @@ public class BuildCardActivity extends AppCompatActivity {
                             break;
                         }
                     }
+                    int[] j80=RandomT.Randthree(80);
 
-                    STR = STR - 27;
-                    CON = CON - 27;
-                    DEX = DEX - 26;
+                    STR = STR - j80[0];
+                    CON = CON - j80[1];
+                    DEX = DEX - j80[2];
                     MOV = MOV - 5;
 
 
@@ -855,6 +867,62 @@ public class BuildCardActivity extends AppCompatActivity {
         }
         Log.i("intiThird", "skilllist----->"+skilllist);
         }
+        //第四步，完成车卡并储存在数据库中
+    private void intiFour(){
+        bt_FinishBuild=findViewById(R.id.finishBuild);
+        bt_FinishBuild.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView textViewown=findViewById(R.id.build_own_point);
+                TextView textViewlike=findViewById(R.id.build_like_point);
+                if(Integer.parseInt(textViewown.getText().toString())>0||Integer.parseInt(textViewlike.getText().toString())>0){
+                    //如果技能点未分配完毕，弹出提示框是否直接保存
+                    AlertDialog.Builder builder=new AlertDialog.Builder(BuildCardActivity.this);
+                    builder.setTitle("提示");
+                    builder.setMessage("技能点未分配完毕，是否直接创建人物");
+                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {  //确定按钮
+                        @Override
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            dataToDB();
+                        }
+                    });
+                    builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {  //取消按钮
+                        @Override
+                        public void onClick(DialogInterface arg0, int arg1) {
+                        }
+                    });
+                    AlertDialog b=builder.create();
+                    b.show();
+                }else if (Integer.parseInt(textViewown.getText().toString())==0||Integer.parseInt(textViewlike.getText().toString())==0){
+                    //如果技能点分配完毕，弹出提示框,是否保存
+                    AlertDialog.Builder builder=new AlertDialog.Builder(BuildCardActivity.this);
+                    builder.setTitle("提示");
+                    builder.setMessage("是否创建人物，数据无法更改");
+                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {  //确定按钮
+                        @Override
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            dataToDB();
+                        }
+                    });
+                    builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {  //取消按钮
+                        @Override
+                        public void onClick(DialogInterface arg0, int arg1) {
+                        }
+                    });
+                    AlertDialog b=builder.create();
+                    b.show();
+                }
+            }
+        });
+    }
+
+    private void dataToDB(){
+        //获取所有数据
+
+        //数据放入数据库
+        //返回人物卡创建页面
+
+    }
 
 
     // 第二阶段，把从Excel报表中读出来的数据导出，写入到SQLite数据库中。
@@ -867,6 +935,7 @@ public class BuildCardActivity extends AppCompatActivity {
 
             ContentValues contentValues = getContentValues(container.id, container.name,
                     container.reputation, container.attributes,container.skill);
+            Log.i("container", "writeDataToSQLite: ");
 
             mSQLiteDatabase.insert(DBHelper.TABLE_NAME_1, null, contentValues);
         }
@@ -1049,4 +1118,6 @@ public class BuildCardActivity extends AppCompatActivity {
         }
         return false;
     }
+
+
 }

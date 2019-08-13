@@ -942,6 +942,15 @@
         android:layout_width="match_parent"
         android:layout_height="20sp" />
 
+    <Button
+        android:padding="10sp"
+        android:id="@+id/finishBuild"
+        android:layout_marginBottom="15sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="完成车卡"/>
+
+
 </LinearLayout>
 
 </ScrollView>

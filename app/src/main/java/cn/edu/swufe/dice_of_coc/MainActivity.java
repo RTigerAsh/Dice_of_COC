@@ -43,9 +43,9 @@ public class MainActivity extends AppCompatActivity {
         listFragment.add(new Fragment2());
         //listFragment.add(new Fragment3());
         listFragment.add(new Fragment4());
+
         MyFragAdapter myAdapter = new MyFragAdapter(getSupportFragmentManager(), this, listFragment);
         viewPager.setAdapter(myAdapter);
-
         //导航栏点击事件和ViewPager滑动事件,让两个控件相互关联
         navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
